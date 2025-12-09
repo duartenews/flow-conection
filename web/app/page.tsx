@@ -159,7 +159,7 @@ export default function ConnectionWizardPage() {
               {/* WhatsApp Business Option */}
               <button
                 onClick={() => goToStep('stage_2_devices')}
-                className="flex items-center p-4 sm:p-5 border-2 rounded-xl hover:bg-blue-50 hover:border-blue-500 transition-all text-left bg-white shadow-sm group"
+                className="flex items-center p-4 sm:p-5 border-2 rounded-xl hover:bg-gray-50 hover:border-gray-900 transition-all text-left bg-white shadow-sm group"
               >
                 <div className="mr-4 shrink-0 group-hover:scale-110 transition-transform">
                   <WhatsAppBusinessIcon />
@@ -169,7 +169,7 @@ export default function ConnectionWizardPage() {
                   <span className="text-sm text-gray-500">Versão para empresas</span>
                 </div>
                 <div className="ml-3 shrink-0">
-                  <div className="w-5 h-5 rounded-full border-2 border-gray-300 group-hover:border-blue-500 group-hover:bg-blue-500 flex items-center justify-center">
+                  <div className="w-5 h-5 rounded-full border-2 border-gray-300 group-hover:border-gray-900 group-hover:bg-gray-900 flex items-center justify-center">
                     <div className="w-2 h-2 bg-white rounded-full opacity-0 group-hover:opacity-100" />
                   </div>
                 </div>
@@ -232,7 +232,7 @@ export default function ConnectionWizardPage() {
               <label className={`
                     relative flex flex-col items-center justify-center p-4 sm:p-5 border-2 rounded-xl cursor-pointer transition-all
                     ${devices.computer
-                  ? 'border-blue-500 bg-blue-50 ring-2 ring-blue-500 ring-offset-2'
+                  ? 'border-gray-900 bg-gray-50 ring-2 ring-gray-900 ring-offset-2'
                   : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'}
                `}>
                 <input
@@ -249,7 +249,7 @@ export default function ConnectionWizardPage() {
               <label className={`
                     relative flex flex-col items-center justify-center p-4 sm:p-5 border-2 rounded-xl cursor-pointer transition-all
                     ${devices.mobile
-                  ? 'border-green-500 bg-green-50 ring-2 ring-green-500 ring-offset-2'
+                  ? 'border-gray-900 bg-gray-50 ring-2 ring-gray-900 ring-offset-2'
                   : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'}
                `}>
                 <input
@@ -266,7 +266,7 @@ export default function ConnectionWizardPage() {
               <label className={`
                     relative flex flex-col items-center justify-center p-4 sm:p-5 border-2 rounded-xl cursor-pointer transition-all col-span-2
                     ${devices.tablet
-                  ? 'border-purple-500 bg-purple-50 ring-2 ring-purple-500 ring-offset-2'
+                  ? 'border-gray-900 bg-gray-50 ring-2 ring-gray-900 ring-offset-2'
                   : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'}
                `}>
                 <input
@@ -275,7 +275,7 @@ export default function ConnectionWizardPage() {
                   checked={devices.tablet}
                   onChange={() => handleDeviceChange('tablet')}
                 />
-                <div className="mb-2 text-3xl">📟</div>
+                <div className="mb-2 text-3xl inline-block rotate-90">�</div>
                 <span className="font-bold text-gray-900 text-sm sm:text-base">Tablet / iPad</span>
               </label>
             </div>
@@ -298,7 +298,7 @@ export default function ConnectionWizardPage() {
                   }
                 }}
                 disabled={!devices.computer && !devices.mobile && !devices.tablet}
-                className="w-full max-w-md px-6 py-3 bg-blue-600 text-white text-base font-bold rounded-xl hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                className="w-full max-w-md px-6 py-3 bg-gray-900 text-white text-base font-bold rounded-xl hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
               >
                 Continuar
               </button>
@@ -319,7 +319,7 @@ export default function ConnectionWizardPage() {
                   <button
                     onClick={() => setDevices(prev => ({ ...prev, computerType: 'windows' }))}
                     className={`flex flex-col items-center p-3 border-2 rounded-xl transition-all ${devices.computerType === 'windows'
-                      ? 'border-blue-500 bg-blue-50 text-blue-700'
+                      ? 'border-gray-900 bg-gray-50 text-gray-900'
                       : 'border-gray-200 hover:bg-gray-50 text-gray-600'
                       }`}
                   >
@@ -350,7 +350,7 @@ export default function ConnectionWizardPage() {
                   <button
                     onClick={() => setDevices(prev => ({ ...prev, mobileType: 'android' }))}
                     className={`flex flex-col items-center p-3 border-2 rounded-xl transition-all ${devices.mobileType === 'android'
-                      ? 'border-green-500 bg-green-50 text-green-700'
+                      ? 'border-gray-900 bg-gray-50 text-gray-900'
                       : 'border-gray-200 hover:bg-gray-50 text-gray-600'
                       }`}
                   >
@@ -375,7 +375,7 @@ export default function ConnectionWizardPage() {
               <button
                 onClick={() => goToStep('stage_3_traffic_check')}
                 disabled={(devices.computer && !devices.computerType) || ((devices.mobile || devices.tablet) && !devices.mobileType)}
-                className="w-full max-w-md px-6 py-3 bg-blue-600 text-white text-base font-bold rounded-xl hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+                className="w-full max-w-md px-6 py-3 bg-gray-900 text-white text-base font-bold rounded-xl hover:bg-gray-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
               >
                 Continuar
               </button>
@@ -431,7 +431,7 @@ export default function ConnectionWizardPage() {
       case 'stage_2_no_computer_support':
         return (
           <div className="space-y-4 text-center animate-fadeIn max-w-xl mx-auto">
-            <div className="bg-blue-50 p-5 rounded-2xl border border-blue-100">
+            <div className="bg-white p-5 rounded-2xl border-2 border-gray-200">
               <div className="text-4xl mb-3">💬</div>
               <h2 className="text-xl font-bold text-gray-900 mb-3">Nesse caso te ajudaremos com isso.</h2>
               <p className="text-gray-600 mb-4 text-sm">
@@ -442,7 +442,7 @@ export default function ConnectionWizardPage() {
               </p>
               <a
                 href="https://wa.me/5511975211053?text=Eu%20preciso%20de%20ajuda%2C%20porque%20eu%20n%C3%A3o%20possuo%20um%20computador%20para%20a%20conex%C3%A3o."
-                className="inline-block w-full py-3 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 transition-colors text-sm"
+                className="inline-block w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors text-sm"
               >
                 Abrir Chat de Suporte Agora
               </a>
@@ -461,7 +461,7 @@ export default function ConnectionWizardPage() {
                   setDevices(prev => ({ ...prev, mobile: true }));
                   goToStep('stage_2_os_selection');
                 }}
-                className="w-full py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors text-sm"
+                className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors text-sm"
               >
                 Estou com o celular aqui
               </button>
@@ -531,10 +531,10 @@ export default function ConnectionWizardPage() {
                   saveChoice('runs_ads', 'true');
                   goToStep('stage_3_traffic_source');
                 }}
-                className="w-full p-4 border-2 border-blue-100 bg-blue-50 rounded-xl text-left hover:border-blue-500 hover:bg-blue-100 transition-all group"
+                className="w-full p-4 border-2 border-blue-100 bg-gray-50 rounded-xl text-left hover:border-gray-900 hover:bg-blue-100 transition-all group"
               >
                 <span className="block text-base font-bold text-blue-900 mb-1">Sim, faço anúncios para este número que desejo conectar</span>
-                <span className="text-blue-700 text-sm">Os anúncios são direcionados para esse número específico</span>
+                <span className="text-gray-900 text-sm">Os anúncios são direcionados para esse número específico</span>
               </button>
 
               <button
@@ -574,7 +574,7 @@ export default function ConnectionWizardPage() {
                   saveChoice('ad_platform', 'meta_business');
                   goToStep('stage_3_meta_access_check');
                 }}
-                className="w-full p-4 border-2 border-gray-100 bg-white rounded-xl text-left hover:border-blue-500 hover:bg-blue-50 transition-all"
+                className="w-full p-4 border-2 border-gray-100 bg-white rounded-xl text-left hover:border-gray-900 hover:bg-gray-50 transition-all"
               >
                 <span className="font-bold text-gray-900">Gerenciador de Anúncios Facebook (Meta)</span>
                 <p className="text-xs text-gray-500 mt-1">Uso o painel profissional do Facebook/Meta</p>
@@ -587,7 +587,7 @@ export default function ConnectionWizardPage() {
       case 'stage_3_any_facebook':
         return (
           <div className="space-y-4 text-center animate-fadeIn max-w-xl mx-auto">
-            <div className="bg-green-50 p-4 rounded-2xl border border-green-100 mb-4">
+            <div className="bg-gray-50 p-4 rounded-2xl border border-green-100 mb-4">
               <h3 className="text-lg font-bold text-green-900 mb-2">Você pode usar <strong>qualquer conta do Facebook</strong> para fazer a conexão, entenda:</h3>
               <p className="text-green-800 mt-2 text-xs">
                 Não precisa ser a conta oficial da clínica. Pode ser seu perfil pessoal ou qualquer outro.
@@ -620,7 +620,7 @@ export default function ConnectionWizardPage() {
                   saveChoice('meta_access', 'has_access');
                   goToStep('step_inside_system');
                 }}
-                className="w-full p-4 bg-blue-600 text-white rounded-xl text-left hover:bg-blue-700 transition-all font-bold text-sm"
+                className="w-full p-4 bg-gray-900 text-white rounded-xl text-left hover:bg-gray-800 transition-all font-bold text-sm"
               >
                 Tenho acesso a essa conta
               </button>
@@ -654,7 +654,7 @@ export default function ConnectionWizardPage() {
           <div className="space-y-4 animate-fadeIn max-w-2xl mx-auto">
             <h2 className="text-xl font-bold text-gray-900 text-center">Acesso Perdido</h2>
 
-            <div className="bg-blue-50 p-4 rounded-xl border-l-4 border-blue-400 text-left">
+            <div className="bg-gray-50 p-4 rounded-xl border-l-4 border-blue-400 text-left">
               <p className="font-semibold text-blue-900 mb-1 text-sm">💡 Essa conta pertence ao seu Gestor de Tráfego?</p>
               <p className="text-xs text-blue-800">Entre em contato com ele para recuperar o acesso.</p>
             </div>
@@ -662,7 +662,7 @@ export default function ConnectionWizardPage() {
             <div className="space-y-3">
               <button
                 onClick={() => goToStep('step_inside_system')}
-                className="w-full p-4 border-2 border-green-100 bg-green-50 rounded-xl text-left hover:border-green-400 hover:bg-green-100 transition-all"
+                className="w-full p-4 border-2 border-green-100 bg-gray-50 rounded-xl text-left hover:border-green-400 hover:bg-green-100 transition-all"
               >
                 <span className="font-bold text-green-900 text-sm">Consegui a conta de volta</span>
               </button>
@@ -712,14 +712,14 @@ export default function ConnectionWizardPage() {
                   saveChoice('lost_access_strategy', 'try_anyway');
                   goToStep('step_inside_system');
                 }}
-                className="w-full p-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 text-xs"
+                className="w-full p-3 bg-gray-900 text-white rounded-xl font-bold hover:bg-gray-800 text-xs"
               >
                 Vou tentar conectar com outra conta por enquanto, só pra tirar a prova de que realmente não é a conta que perdi
               </button>
 
               <button
                 onClick={() => goToStep('step_inside_system')}
-                className="w-full p-3 border-2 border-green-500 bg-green-50 text-green-800 rounded-xl font-bold hover:bg-green-100 text-xs"
+                className="w-full p-3 border-2 border-gray-900 bg-gray-50 text-green-800 rounded-xl font-bold hover:bg-green-100 text-xs"
               >
                 Fiz o caminho de migrar meu número do WhatsApp Business (profissional) para o WhatsApp Comum (pessoal) e já voltei ele para o WhatsApp Business (profissional) novamente
               </button>
@@ -731,7 +731,7 @@ export default function ConnectionWizardPage() {
       case 'stage_3_meta_lost_access_path_2':
         return (
           <div className="space-y-5 animate-fadeIn max-w-xl mx-auto text-center">
-            <div className="bg-green-50 p-5 rounded-2xl border border-green-100">
+            <div className="bg-gray-50 p-5 rounded-2xl border border-green-100">
               <div className="text-4xl mb-3">✅</div>
               <h2 className="text-xl font-bold text-gray-900 mb-3">Ótimo! Migração Concluída</h2>
               <p className="text-gray-600 mb-4 text-sm">
@@ -805,7 +805,7 @@ export default function ConnectionWizardPage() {
                 onClick={() => {
                   goToStep(devices.computerType === 'mac' ? 'step_check_tabs_mac' : 'step_check_tabs_windows');
                 }}
-                className="w-full py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg text-sm"
+                className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors shadow-lg text-sm"
               >
                 Continuar
               </button>
@@ -823,7 +823,7 @@ export default function ConnectionWizardPage() {
 
             <button
               onClick={() => goToStep('step_check_tabs_windows')}
-              className="text-xs text-blue-600 underline hover:text-blue-800"
+              className="text-xs text-gray-700 underline hover:text-gray-900"
             >
               Na verdade agora estou em um Windows/outro
             </button>
@@ -878,7 +878,7 @@ export default function ConnectionWizardPage() {
 
             <button
               onClick={() => goToStep('step_connection_start')}
-              className="w-full py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg px-6 text-sm"
+              className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors shadow-lg px-6 text-sm"
             >
               Fiz isso, continuar
             </button>
@@ -896,7 +896,7 @@ export default function ConnectionWizardPage() {
 
             <button
               onClick={() => goToStep('step_check_tabs_mac')}
-              className="text-xs text-blue-600 underline hover:text-blue-800"
+              className="text-xs text-gray-700 underline hover:text-gray-900"
             >
               Na verdade agora estou em um Macbook
             </button>
@@ -951,7 +951,7 @@ export default function ConnectionWizardPage() {
 
             <button
               onClick={() => goToStep('step_connection_start')}
-              className="w-full py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg px-6 text-sm"
+              className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors shadow-lg px-6 text-sm"
             >
               Fiz isso, continuar
             </button>
@@ -998,7 +998,7 @@ export default function ConnectionWizardPage() {
                   onClick={() => goToStep('step_model_1')}
                   className="text-left"
                 >
-                  <div className="bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-blue-500 hover:shadow-lg transition-all cursor-pointer">
+                  <div className="bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-gray-900 hover:shadow-lg transition-all cursor-pointer">
                     <h4 className="text-sm font-bold text-gray-800 text-center mt-2">Modelo 1</h4>
                     <img
                       src="/mod-1.png"
@@ -1015,7 +1015,7 @@ export default function ConnectionWizardPage() {
                   onClick={() => goToStep('step_model_2')}
                   className="text-left"
                 >
-                  <div className="bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-blue-500 hover:shadow-lg transition-all cursor-pointer">
+                  <div className="bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-gray-900 hover:shadow-lg transition-all cursor-pointer">
                     <h4 className="text-sm font-bold text-gray-800 text-center mt-2">Modelo 2</h4>
                     <img
                       src="/mod-2.png"
@@ -1036,13 +1036,13 @@ export default function ConnectionWizardPage() {
                 <div className="grid grid-cols-2 gap-3">
                   <button
                     onClick={() => goToStep('step_model_1')}
-                    className="w-full py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors text-sm"
+                    className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors text-sm"
                   >
                     Modelo 1
                   </button>
                   <button
                     onClick={() => goToStep('step_model_2')}
-                    className="w-full py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors text-sm"
+                    className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors text-sm"
                   >
                     Modelo 2
                   </button>
@@ -1064,10 +1064,10 @@ export default function ConnectionWizardPage() {
             title: 'Crie/Selecione o portfólio correto',
             subtitle: 'Passo 2',
             description: (
-              <div className="space-y-3 text-left text-xs text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-100 max-h-48 overflow-y-auto">
+              <div className="space-y-2 text-left text-xs leading-snug text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-100">
                 <p><strong>Se tiver dificuldade, chame a pessoa que gerencia seu tráfego pago para te ajudar:</strong></p>
-                <p>Se você já roda tráfego pago dentro do Facebook, você precisa escolher o portfólio/BM em que seu número já está vinculado. Se não possui nenhum portfólio você pode criar um do 0.</p>
-                <ul className="list-disc pl-4 space-y-1">
+                <p className="text-[11px]">Se você já roda tráfego pago dentro do Facebook, você precisa escolher o portfólio/BM em que seu número já está vinculado. Se não possui nenhum portfólio você pode criar um do 0.</p>
+                <ul className="list-disc pl-4 space-y-0.5 text-[11px]">
                   <li><strong>Nome da empresa:</strong> escreva o nome da sua clínica.</li>
                   <li><strong>Email:</strong> Insira seu melhor email.</li>
                   <li><strong>Site:</strong> use seu website ou link do Instagram (deve iniciar com "https://")</li>
@@ -1089,16 +1089,16 @@ export default function ConnectionWizardPage() {
         ];
 
         return (
-          <div className="w-full text-center animate-fadeIn max-w-2xl mx-auto">
+          <div className="w-full text-center animate-fadeIn max-w-2xl lg:max-w-4xl mx-auto">
             <div className="w-full py-3">
               <p className="text-xs text-gray-500 font-bold tracking-wider uppercase mb-1">{model1Slides[currentSlide].subtitle}</p>
               <h3 className="text-lg font-bold text-gray-900 mb-4">{model1Slides[currentSlide].title}</h3>
 
-              <div className="rounded-lg overflow-hidden mb-4 bg-gray-50 border border-gray-100">
+              <div className="rounded-lg overflow-hidden mb-4 bg-gray-50 border border-gray-100 max-w-md lg:max-w-lg mx-auto">
                 <img
                   src={model1Slides[currentSlide].image}
                   alt={model1Slides[currentSlide].title}
-                  className="w-full h-auto max-h-56 object-contain"
+                  className="w-full h-auto max-h-56 lg:max-h-96 object-contain"
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                     (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-4"><span class="text-gray-500 text-xs">📷 Imagem: ' + model1Slides[currentSlide].image + '</span></div>';
@@ -1110,7 +1110,7 @@ export default function ConnectionWizardPage() {
 
               <div className="flex justify-center gap-2 my-5">
                 {model1Slides.map((_, index) => (
-                  <div key={index} className={`w-2 h-2 rounded-full transition-colors ${index === currentSlide ? 'bg-blue-600' : 'bg-gray-300'}`} />
+                  <div key={index} className={`w-2 h-2 rounded-full transition-colors ${index === currentSlide ? 'bg-gray-900' : 'bg-gray-300'}`} />
                 ))}
               </div>
 
@@ -1124,7 +1124,7 @@ export default function ConnectionWizardPage() {
                       goToStep('step_model_2', 3);
                     }
                   }}
-                  className="w-full py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg text-sm"
+                  className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors shadow-lg text-sm"
                 >
                   {currentSlide < model1Slides.length - 1 ? 'Próxima etapa' : 'Continuar para inserir número'}
                 </button>
@@ -1151,16 +1151,16 @@ export default function ConnectionWizardPage() {
             title: 'Crie/Selecione o portfólio correto',
             subtitle: 'Passo 2',
             description: (
-              <div className="space-y-4 text-left text-sm text-gray-600 bg-gray-50 p-6 rounded-xl border border-gray-100 max-h-96 overflow-y-auto">
-                <p><strong>Nesse momento se tiver dificuldade, e achar que for necessário chame a pessoa que gerencia seu tráfego pago, ou mesmo seu cônjuge, para te ajudar:</strong></p>
-                <p>Se você já roda tráfego pago dentro do Facebook, você precisa escolher o portfólio/BM em que seu número já está vinculado. Se você não possui nenhum portfólio você pode criar um do 0.</p>
+              <div className="space-y-2 text-left text-xs leading-snug text-gray-600 bg-gray-50 p-3 rounded-lg border border-gray-100">
+                <p className="text-[11px]"><strong>Nesse momento se tiver dificuldade, e achar que for necessário chame a pessoa que gerencia seu tráfego pago, ou mesmo seu cônjuge, para te ajudar:</strong></p>
+                <p className="text-[11px]">Se você já roda tráfego pago dentro do Facebook, você precisa escolher o portfólio/BM em que seu número já está vinculado. Se você não possui nenhum portfólio você pode criar um do 0.</p>
 
-                <div className="mt-4 bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
-                  <h4 className="font-bold text-gray-800 mb-2">Dicas de apoio:</h4>
-                  <ul className="space-y-3 list-disc pl-5">
+                <div className="mt-2 bg-white p-2 rounded-lg border border-gray-200">
+                  <h4 className="font-bold text-gray-800 mb-1 text-[11px]">Dicas de apoio:</h4>
+                  <ul className="space-y-1 list-disc pl-4 text-[10px]">
                     <li><strong>Nome da empresa:</strong> escreva o nome da sua clínica. O nome da empresa não será público, então não precisa gastar muito tempo pensando em como colocar isso da melhor forma.</li>
                     <li><strong>Email:</strong> Insira seu melhor email.</li>
-                    <li><strong>Site ou perfil comercial:</strong> nesse campo conforme você digita o Facebook fica tentando validar se o link existe ou não, isso pode acabar atrapalhando sua digitação, então certifique de que não ficou faltando nenhuma letra no caminho, porque pode ser considerado um link inválido por esse motivo. A ideia é você adicionar seu website, e se não possuir um você pode usar o link que direciona para seu Instagram. Exemplo: <code>https://instagram.com/seunomedeusarioaqui/</code> (a única regra é que o link deve se iniciar com "https://")</li>
+                    <li><strong>Site ou perfil comercial:</strong> nesse campo conforme você digita o Facebook fica tentando validar se o link existe ou não, isso pode acabar atrapalhando sua digitação, então certifique de que não ficou faltando nenhuma letra no caminho, porque pode ser considerado um link inválido por esse motivo. A ideia é você adicionar seu website, e se não possuir um você pode usar o link que direciona para seu Instagram. Exemplo: <code className="text-[9px]">https://instagram.com/seunomedeusarioaqui/</code> (a única regra é que o link deve se iniciar com "https://")</li>
                     <li><strong>País:</strong> escolha por último o país onde você estará atendendo.</li>
                   </ul>
                 </div>
@@ -1199,7 +1199,7 @@ export default function ConnectionWizardPage() {
               <div className="space-y-8">
                 <button
                   onClick={() => setCurrentSlide(5)}
-                  className="w-full p-4 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition-all"
+                  className="w-full p-4 rounded-lg border-2 border-gray-200 hover:border-gray-900 hover:bg-gray-50 transition-all"
                 >
                   <p className="font-bold text-gray-800 text-base mb-2">1. Vejo um QR Code</p>
                   <div className="rounded-lg overflow-hidden bg-white">
@@ -1209,7 +1209,7 @@ export default function ConnectionWizardPage() {
                 
                 <button
                   onClick={() => goToStep('step_model_2_novo_numero')}
-                  className="w-full p-4 rounded-lg border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition-all"
+                  className="w-full p-4 rounded-lg border-2 border-gray-200 hover:border-gray-900 hover:bg-gray-50 transition-all"
                 >
                   <p className="font-bold text-gray-800 text-base mb-2">2. Vejo essa tela para adicionar número</p>
                   <div className="rounded-lg overflow-hidden bg-white">
@@ -1250,18 +1250,18 @@ export default function ConnectionWizardPage() {
         ];
 
         return (
-          <div className="w-full text-center animate-fadeIn max-w-2xl mx-auto">
+          <div className="w-full text-center animate-fadeIn max-w-2xl lg:max-w-5xl mx-auto">
             <div className="w-full py-3">
               <p className="text-xs text-gray-500 font-bold tracking-wider uppercase mb-1">{model2Slides[currentSlide].subtitle}</p>
               <h3 className="text-lg font-bold text-gray-900 mb-4">{model2Slides[currentSlide].title}</h3>
 
               {/* Image Container - Handles single or dual images (hidden for slide 4 which has images in buttons) */}
               {currentSlide !== 4 && (
-                <div className={`rounded-lg overflow-hidden mb-4 bg-gray-50 border border-gray-100 ${'secondaryImage' in model2Slides[currentSlide] ? 'grid grid-cols-2 gap-2' : ''}`}>
+                <div className={`rounded-lg overflow-hidden mb-4 bg-gray-50 border border-gray-100 ${'secondaryImage' in model2Slides[currentSlide] ? 'grid grid-cols-2 gap-2 max-w-4xl mx-auto' : 'max-w-md lg:max-w-lg mx-auto'}`}>
                   <img
                     src={model2Slides[currentSlide].image}
                     alt={model2Slides[currentSlide].title}
-                    className="w-full h-auto max-h-56 object-contain"
+                    className="w-full h-auto max-h-56 lg:max-h-96 object-contain"
                     onError={(e) => {
                       (e.target as HTMLImageElement).style.display = 'none';
                       (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-4"><span class="text-gray-500 text-xs">📷 ' + model2Slides[currentSlide].image + '</span></div>';
@@ -1272,7 +1272,7 @@ export default function ConnectionWizardPage() {
                       // @ts-ignore - checking generic object property
                       src={model2Slides[currentSlide].secondaryImage}
                       alt={model2Slides[currentSlide].title + ' part 2'}
-                      className="w-full h-auto max-h-56 object-contain"
+                      className="w-full h-auto max-h-56 lg:max-h-96 object-contain"
                       onError={(e) => {
                       (e.target as HTMLImageElement).style.display = 'none';
                       // @ts-ignore
@@ -1289,7 +1289,7 @@ export default function ConnectionWizardPage() {
 
               <div className="flex justify-center gap-2 my-5">
                 {model2Slides.map((_, index) => (
-                  <div key={index} className={`w-2 h-2 rounded-full transition-colors ${index === currentSlide ? 'bg-blue-600' : 'bg-gray-300'}`} />
+                  <div key={index} className={`w-2 h-2 rounded-full transition-colors ${index === currentSlide ? 'bg-gray-900' : 'bg-gray-300'}`} />
                 ))}
               </div>
 
@@ -1309,7 +1309,7 @@ export default function ConnectionWizardPage() {
                         window.location.reload();
                       }
                     }}
-                    className="w-full py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg text-sm"
+                    className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors shadow-lg text-sm"
                   >
                     {currentSlide < model2Slides.length - 1 ? 'Próxima etapa' : 'Concluir'}
                   </button>
@@ -1336,7 +1336,7 @@ export default function ConnectionWizardPage() {
               <h3 className="text-lg font-bold text-gray-900 mb-4">Como ler o QR code</h3>
               
               {/* Descrição única */}
-              <div className="bg-blue-50 p-4 rounded-lg border border-blue-100 text-left mb-4">
+              <div className="bg-gray-50 p-4 rounded-lg border border-blue-100 text-left mb-4">
                 <p className="text-gray-700 text-sm">
                   Essa mensagem do Facebook tem um botão <strong>"Ler QR code"</strong> que te leva para uma página que deve estar em branco com um botão no final dela: <strong>"escanear QR code"</strong> que abrirá sua câmera e você poderá ler o QR code para conexão.
                 </p>
@@ -1382,7 +1382,7 @@ export default function ConnectionWizardPage() {
               <div className="grid gap-2">
                 <button
                   onClick={() => goToStep('step_model_2_fuso')}
-                  className="w-full py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg text-sm"
+                  className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors shadow-lg text-sm"
                 >
                   Continuar
                 </button>
@@ -1425,7 +1425,7 @@ export default function ConnectionWizardPage() {
         ];
 
         return (
-          <div className="w-full text-center animate-fadeIn max-w-2xl mx-auto">
+          <div className="w-full text-center animate-fadeIn max-w-2xl lg:max-w-5xl mx-auto">
             <div className="w-full py-3">
               {/* Header com ícone Apple */}
               <div className="flex items-center justify-center gap-2 mb-3">
@@ -1439,11 +1439,11 @@ export default function ConnectionWizardPage() {
               <p className="text-xs text-gray-500 font-bold mb-4">{iphoneSlides[currentSlide].subtitle}</p>
 
               <div className="mb-4">
-                <button onClick={() => goToStep('step_model_2_nao_android')} className="text-xs text-blue-600 hover:text-blue-800 underline">Na verdade meu aparelho é Android</button>
+                <button onClick={() => goToStep('step_model_2_nao_android')} className="text-xs text-gray-700 hover:text-gray-900 underline">Na verdade meu aparelho é Android</button>
               </div>
 
               {/* Grid de 2 imagens */}
-              <div className="grid grid-cols-2 gap-3 mb-4">
+              <div className="grid grid-cols-2 gap-3 mb-4 max-w-2xl lg:max-w-4xl mx-auto">
                 {iphoneSlides[currentSlide].images.map((image, index) => (
                   <div key={index} className="space-y-2">
                     <p className="text-xs text-gray-700 text-center px-1">
@@ -1453,7 +1453,7 @@ export default function ConnectionWizardPage() {
                       <img 
                         src={image} 
                         alt={`iPhone Step ${index + 1}`}
-                        className="w-full h-auto max-h-48 object-contain"
+                        className="w-full h-auto max-h-48 lg:max-h-80 object-contain"
                         onError={(e) => { 
                           (e.target as HTMLImageElement).style.display = 'none'; 
                           (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 ' + image + '</span></div>'; 
@@ -1467,7 +1467,7 @@ export default function ConnectionWizardPage() {
               {/* Indicadores de progresso */}
               <div className="flex justify-center gap-2 my-4">
                 {iphoneSlides.map((_, index) => (
-                  <div key={index} className={`w-2 h-2 rounded-full transition-colors ${index === currentSlide ? 'bg-blue-600' : 'bg-gray-300'}`} />
+                  <div key={index} className={`w-2 h-2 rounded-full transition-colors ${index === currentSlide ? 'bg-gray-900' : 'bg-gray-300'}`} />
                 ))}
               </div>
 
@@ -1476,7 +1476,7 @@ export default function ConnectionWizardPage() {
                   <>
                     <button
                       onClick={() => nextSlide()}
-                      className="w-full py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg text-sm"
+                      className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors shadow-lg text-sm"
                     >
                       Próxima Etapa
                     </button>
@@ -1488,7 +1488,7 @@ export default function ConnectionWizardPage() {
                   <>
                     <button
                       onClick={() => goToStep('step_model_2_fuso')}
-                      className="w-full py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg text-sm"
+                      className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors shadow-lg text-sm"
                     >
                       Continuar
                     </button>
@@ -1544,7 +1544,7 @@ export default function ConnectionWizardPage() {
         ];
 
         return (
-          <div className="w-full text-center animate-fadeIn max-w-2xl mx-auto">
+          <div className="w-full text-center animate-fadeIn max-w-2xl lg:max-w-5xl mx-auto">
             <div className="w-full py-3">
               {/* Header com ícone Android */}
               <div className="flex items-center justify-center gap-2 mb-3">
@@ -1558,11 +1558,11 @@ export default function ConnectionWizardPage() {
               <p className="text-xs text-gray-500 font-bold mb-4">{androidSlides[currentSlide].subtitle}</p>
 
               <div className="mb-4">
-                <button onClick={() => goToStep('step_model_2_nao_iphone')} className="text-xs text-blue-600 hover:text-blue-800 underline">Na verdade meu aparelho é iPhone</button>
+                <button onClick={() => goToStep('step_model_2_nao_iphone')} className="text-xs text-gray-700 hover:text-gray-900 underline">Na verdade meu aparelho é iPhone</button>
               </div>
 
               {/* Grid de imagens (1 ou 2 dependendo da etapa) */}
-              <div className={`grid gap-3 mb-4 ${androidSlides[currentSlide].images.length === 1 ? 'grid-cols-1 max-w-xs mx-auto' : 'grid-cols-2'}`}>
+              <div className={`grid gap-3 mb-4 ${androidSlides[currentSlide].images.length === 1 ? 'grid-cols-1 max-w-xs lg:max-w-md mx-auto' : 'grid-cols-2 max-w-2xl lg:max-w-4xl mx-auto'}`}>
                 {androidSlides[currentSlide].images.map((image, index) => (
                   <div key={index} className="space-y-2">
                     <p className="text-xs text-gray-700 text-center px-1">
@@ -1572,7 +1572,7 @@ export default function ConnectionWizardPage() {
                       <img 
                         src={image} 
                         alt={`Android Step ${index + 1}`}
-                        className="w-full h-auto max-h-48 object-contain"
+                        className="w-full h-auto max-h-48 lg:max-h-80 object-contain"
                         onError={(e) => { 
                           (e.target as HTMLImageElement).style.display = 'none'; 
                           (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 ' + image + '</span></div>'; 
@@ -1586,7 +1586,7 @@ export default function ConnectionWizardPage() {
               {/* Indicadores de progresso */}
               <div className="flex justify-center gap-2 my-4">
                 {androidSlides.map((_, index) => (
-                  <div key={index} className={`w-2 h-2 rounded-full transition-colors ${index === currentSlide ? 'bg-blue-600' : 'bg-gray-300'}`} />
+                  <div key={index} className={`w-2 h-2 rounded-full transition-colors ${index === currentSlide ? 'bg-gray-900' : 'bg-gray-300'}`} />
                 ))}
               </div>
 
@@ -1595,7 +1595,7 @@ export default function ConnectionWizardPage() {
                   <>
                     <button
                       onClick={() => nextSlide()}
-                      className="w-full py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg text-sm"
+                      className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors shadow-lg text-sm"
                     >
                       Próxima Etapa
                     </button>
@@ -1607,7 +1607,7 @@ export default function ConnectionWizardPage() {
                   <>
                     <button
                       onClick={() => goToStep('step_model_2_fuso')}
-                      className="w-full py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg"
+                      className="w-full py-4 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors shadow-lg"
                     >
                       Continuar para Fuso Horário
                     </button>
@@ -1649,13 +1649,13 @@ export default function ConnectionWizardPage() {
         ];
 
         return (
-          <div className="w-full text-center animate-fadeIn max-w-2xl mx-auto">
+          <div className="w-full text-center animate-fadeIn max-w-2xl lg:max-w-5xl mx-auto">
             <div className="w-full py-3">
               <p className="text-xs text-gray-500 font-bold tracking-wider uppercase mb-1">{novoNumeroSlides[currentSlide].subtitle}</p>
               <h3 className="text-lg font-bold text-gray-900 mb-4">{novoNumeroSlides[currentSlide].title}</h3>
 
               {/* Grid de imagens */}
-              <div className={`grid gap-3 mb-4 ${novoNumeroSlides[currentSlide].images.length === 1 ? 'grid-cols-1 max-w-xs mx-auto' : 'grid-cols-2'}`}>
+              <div className={`grid gap-3 mb-4 ${novoNumeroSlides[currentSlide].images.length === 1 ? 'grid-cols-1 max-w-xs lg:max-w-md mx-auto' : 'grid-cols-2 max-w-2xl lg:max-w-4xl mx-auto'}`}>
                 {novoNumeroSlides[currentSlide].images.map((image, index) => (
                   <div key={index} className="space-y-2">
                     {novoNumeroSlides[currentSlide].descriptions[index] && (
@@ -1667,7 +1667,7 @@ export default function ConnectionWizardPage() {
                       <img 
                         src={image} 
                         alt={`Step ${index + 1}`}
-                        className="w-full h-auto max-h-48 object-contain"
+                        className="w-full h-auto max-h-48 lg:max-h-80 object-contain"
                         onError={(e) => { 
                           (e.target as HTMLImageElement).style.display = 'none'; 
                           (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 ' + image + '</span></div>'; 
@@ -1681,7 +1681,7 @@ export default function ConnectionWizardPage() {
               {/* Indicadores de progresso */}
               <div className="flex justify-center gap-2 my-4">
                 {novoNumeroSlides.map((_, index) => (
-                  <div key={index} className={`w-2 h-2 rounded-full transition-colors ${index === currentSlide ? 'bg-blue-600' : 'bg-gray-300'}`} />
+                  <div key={index} className={`w-2 h-2 rounded-full transition-colors ${index === currentSlide ? 'bg-gray-900' : 'bg-gray-300'}`} />
                 ))}
               </div>
 
@@ -1690,7 +1690,7 @@ export default function ConnectionWizardPage() {
                   <>
                     <button
                       onClick={() => nextSlide()}
-                      className="w-full py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg text-sm"
+                      className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors shadow-lg text-sm"
                     >
                       Continuar
                     </button>
@@ -1705,7 +1705,7 @@ export default function ConnectionWizardPage() {
                         setCurrentSlide(0);
                         goToStep('step_model_2_fuso');
                       }}
-                      className="w-full py-4 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg"
+                      className="w-full py-4 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors shadow-lg"
                     >
                       Continuar para Fuso Horário
                     </button>
@@ -1743,7 +1743,7 @@ export default function ConnectionWizardPage() {
                 <img src="/fuso-horario.png" alt="Fuso Horário" className="w-full h-auto max-h-48 object-contain" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 /fuso-horario.png</span></div>'; }} />
               </div>
               <div className="grid gap-2 mt-5">
-                <button onClick={() => goToStep('step_model_2_conclusao')} className="w-full py-3 bg-blue-600 text-white font-bold rounded-xl hover:bg-blue-700 transition-colors shadow-lg text-sm">Próxima etapa</button>
+                <button onClick={() => goToStep('step_model_2_conclusao')} className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors shadow-lg text-sm">Próxima etapa</button>
                 <button onClick={() => goToStep(cameFromModel1 ? 'step_model_1' : 'step_model_2')} className="w-full py-3 text-gray-500 hover:text-gray-800 font-medium transition-colors">
                   {cameFromModel1 ? 'Voltar (Reiniciar Modelo 1)' : 'Voltar (Reiniciar Modelo 2)'}
                 </button>
@@ -1774,12 +1774,12 @@ export default function ConnectionWizardPage() {
               </div>
 
               {/* Duas imagens lado a lado */}
-              <div className="grid grid-cols-2 gap-3 mb-4">
+              <div className="grid grid-cols-2 gap-3 mb-4 max-w-2xl lg:max-w-4xl mx-auto">
                 <div className="rounded-lg overflow-hidden bg-gray-50 border border-gray-100">
                   <img 
                     src="/conectando.png" 
                     alt="Conectando" 
-                    className="w-full h-auto max-h-44 object-contain" 
+                    className="w-full h-auto max-h-44 lg:max-h-80 object-contain" 
                     onError={(e) => { 
                       (e.target as HTMLImageElement).style.display = 'none'; 
                       (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 /conectando.png</span></div>'; 
@@ -1790,7 +1790,7 @@ export default function ConnectionWizardPage() {
                   <img 
                     src="/concluir.png" 
                     alt="Concluir" 
-                    className="w-full h-auto max-h-44 object-contain" 
+                    className="w-full h-auto max-h-44 lg:max-h-80 object-contain" 
                     onError={(e) => { 
                       (e.target as HTMLImageElement).style.display = 'none'; 
                       (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 /concluir.png</span></div>'; 
@@ -1815,7 +1815,7 @@ export default function ConnectionWizardPage() {
   // --- Main Render ---
 
   return (
-    <div className="min-h-screen bg-white font-sans text-gray-900 flex flex-col">
+    <div className="min-h-screen bg-white font-sans text-gray-900 flex flex-col items-center justify-center">
       {/* Main Content */}
       <main className="w-full max-w-2xl mx-auto px-4 py-6 sm:py-8">
         {renderStepContent()}
