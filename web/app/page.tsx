@@ -275,7 +275,7 @@ export default function ConnectionWizardPage() {
                   checked={devices.tablet}
                   onChange={() => handleDeviceChange('tablet')}
                 />
-                <div className="mb-2 text-3xl inline-block rotate-90">�</div>
+                <div className="mb-2 text-3xl inline-block rotate-90">📱</div>
                 <span className="font-bold text-gray-900 text-sm sm:text-base">Tablet / iPad</span>
               </label>
             </div>
@@ -401,7 +401,7 @@ export default function ConnectionWizardPage() {
                     setDevices(prev => ({ ...prev, computer: true }));
                     goToStep('stage_2_devices');
                   }}
-                  className="w-full py-3 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 transition-colors shadow-sm flex items-center justify-center gap-2 text-sm"
+                  className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors shadow-sm flex items-center justify-center gap-2 text-sm"
                 >
                   💻 Agora consegui um computador
                 </button>
@@ -488,7 +488,7 @@ export default function ConnectionWizardPage() {
             <div className="grid gap-2 pt-3">
               <button
                 onClick={() => goToStep('stage_2_os_selection')}
-                className="w-full py-3 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 transition-colors shadow-sm text-sm"
+                className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors shadow-sm text-sm"
               >
                 Sim, uso o WhatsApp Business (profissional) nele
               </button>
@@ -531,10 +531,10 @@ export default function ConnectionWizardPage() {
                   saveChoice('runs_ads', 'true');
                   goToStep('stage_3_traffic_source');
                 }}
-                className="w-full p-4 border-2 border-blue-100 bg-gray-50 rounded-xl text-left hover:border-gray-900 hover:bg-blue-100 transition-all group"
+                className="w-full p-4 border-2 border-gray-200 bg-gray-50 rounded-xl text-left hover:border-gray-900 hover:bg-gray-100 transition-all group"
               >
-                <span className="block text-base font-bold text-blue-900 mb-1">Sim, faço anúncios para este número que desejo conectar</span>
-                <span className="text-gray-900 text-sm">Os anúncios são direcionados para esse número específico</span>
+                <span className="block text-base font-bold text-gray-900 mb-1">Sim, faço anúncios para este número que desejo conectar</span>
+                <span className="text-gray-600 text-sm">Os anúncios são direcionados para esse número específico</span>
               </button>
 
               <button
@@ -563,7 +563,7 @@ export default function ConnectionWizardPage() {
                   saveChoice('ad_platform', 'instagram_boost');
                   goToStep('stage_3_any_facebook');
                 }}
-                className="w-full p-4 border-2 border-gray-100 bg-white rounded-xl text-left hover:border-purple-500 hover:bg-purple-50 transition-all"
+                className="w-full p-4 border-2 border-gray-100 bg-white rounded-xl text-left hover:border-gray-900 hover:bg-gray-50 transition-all"
               >
                 <span className="font-bold text-gray-900">Impulsionar/turbinar do Instagram</span>
                 <p className="text-xs text-gray-500 mt-1">Apenas clico no botão "Turbinar" ou "Impulsionar" direto no app</p>
@@ -589,14 +589,14 @@ export default function ConnectionWizardPage() {
           <div className="space-y-4 text-center animate-fadeIn max-w-xl mx-auto">
             <div className="bg-gray-50 p-4 rounded-2xl border border-green-100 mb-4">
               <h3 className="text-lg font-bold text-green-900 mb-2">Você pode usar <strong>qualquer conta do Facebook</strong> para fazer a conexão, entenda:</h3>
-              <p className="text-green-800 mt-2 text-xs">
+              <p className="text-gray-900 mt-2 text-xs">
                 Não precisa ser a conta oficial da clínica. Pode ser seu perfil pessoal ou qualquer outro.
                 Ninguém verá qual perfil foi usado para conectar.
               </p>
             </div>
             <button
               onClick={() => goToStep('step_inside_system')}
-              className="w-full py-3 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 transition-colors shadow-lg text-sm"
+              className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors shadow-lg text-sm"
             >
               Entendi, vamos conectar
             </button>
@@ -632,16 +632,16 @@ export default function ConnectionWizardPage() {
                   // user implies they don't know if it's the right account
                   goToStep('step_inside_system');
                 }}
-                className="w-full p-4 border-2 border-gray-200 bg-white rounded-xl text-left hover:border-orange-400 hover:bg-orange-50 transition-all text-sm"
+                className="w-full p-4 border-2 border-gray-200 bg-white rounded-xl text-left hover:border-gray-400 hover:bg-gray-50 transition-all text-sm"
               >
                 Não sei se tenho acesso a essa conta
               </button>
 
               <button
                 onClick={() => goToStep('stage_3_meta_lost_access')}
-                className="w-full p-4 border-2 border-red-100 bg-red-50 rounded-xl text-left hover:border-red-400 hover:bg-red-100 transition-all"
+                className="w-full p-4 border-2 border-gray-200 bg-white rounded-xl text-left hover:border-gray-900 hover:bg-gray-50 transition-all"
               >
-                <span className="font-bold text-red-900 text-sm">Não tenho acesso, com certeza</span>
+                <span className="font-bold text-gray-900 text-sm">Não tenho acesso, com certeza</span>
 
               </button>
             </div>
@@ -654,25 +654,25 @@ export default function ConnectionWizardPage() {
           <div className="space-y-4 animate-fadeIn max-w-2xl mx-auto">
             <h2 className="text-xl font-bold text-gray-900 text-center">Acesso Perdido</h2>
 
-            <div className="bg-gray-50 p-4 rounded-xl border-l-4 border-blue-400 text-left">
-              <p className="font-semibold text-blue-900 mb-1 text-sm">💡 Essa conta pertence ao seu Gestor de Tráfego?</p>
-              <p className="text-xs text-blue-800">Entre em contato com ele para recuperar o acesso.</p>
+            <div className="bg-gray-50 p-4 rounded-xl border-l-4 border-gray-400 text-left">
+              <p className="font-semibold text-gray-900 mb-1 text-sm">💡 Essa conta pertence ao seu Gestor de Tráfego?</p>
+              <p className="text-xs text-gray-700">Entre em contato com ele para recuperar o acesso.</p>
             </div>
 
             <div className="space-y-3">
               <button
                 onClick={() => goToStep('step_inside_system')}
-                className="w-full p-4 border-2 border-green-100 bg-gray-50 rounded-xl text-left hover:border-green-400 hover:bg-green-100 transition-all"
+                className="w-full p-4 border-2 border-gray-200 bg-white rounded-xl text-left hover:border-gray-900 hover:bg-gray-50 transition-all"
               >
-                <span className="font-bold text-green-900 text-sm">Consegui a conta de volta</span>
+                <span className="font-bold text-gray-900 text-sm">Consegui a conta de volta</span>
               </button>
 
               <button
                 onClick={() => goToStep('stage_3_meta_lost_access_options')}
-                className="w-full p-4 border-2 border-red-100 bg-red-50 rounded-xl text-left hover:border-red-400 hover:bg-red-100 transition-all"
+                className="w-full p-4 border-2 border-gray-200 bg-white rounded-xl text-left hover:border-gray-900 hover:bg-gray-50 transition-all"
               >
-                <span className="font-bold text-red-900 text-sm">Acredito que perdi essa conta do Facebook para sempre</span>
-                <p className="text-xs text-red-700 mt-1">Ainda há esperança. Veja o que você pode fazer.</p>
+                <span className="font-bold text-gray-900 text-sm">Acredito que perdi essa conta do Facebook para sempre</span>
+                <p className="text-xs text-gray-600 mt-1">Ainda há esperança. Veja o que você pode fazer.</p>
               </button>
             </div>
             <button onClick={() => goToStep('stage_3_meta_access_check')} className="block mx-auto text-gray-500 hover:text-gray-800 underline mt-4 text-sm">Voltar</button>
@@ -700,8 +700,8 @@ export default function ConnectionWizardPage() {
                   <li>Esperar algumas horas</li>
                   <li>Voltar esse número que estará no WhatsApp Comum (pessoal) para um aplicativo de <strong>WhatsApp Business (profissional)</strong>. E fazer a conexão sem se preocupar com qual conta de Facebook deve entrar.</li>
                 </ol>
-                <div className="bg-yellow-50 p-3 rounded-lg border border-yellow-200 mt-3">
-                  <p className="text-yellow-800 text-xs"><strong>💡 Resultado:</strong> Isso "desvincula" o número da conta perdida do Facebook à força. E o torna livre para conectar em qualquer conta de Facebook.</p>
+                <div className="bg-gray-100 p-3 rounded-lg border border-gray-300 mt-3">
+                  <p className="text-gray-800 text-xs"><strong>💡 Resultado:</strong> Isso "desvincula" o número da conta perdida do Facebook à força. E o torna livre para conectar em qualquer conta de Facebook.</p>
                 </div>
               </div>
             </div>
@@ -719,7 +719,7 @@ export default function ConnectionWizardPage() {
 
               <button
                 onClick={() => goToStep('step_inside_system')}
-                className="w-full p-3 border-2 border-gray-900 bg-gray-50 text-green-800 rounded-xl font-bold hover:bg-green-100 text-xs"
+                className="w-full p-3 border-2 border-gray-900 bg-white rounded-xl font-bold hover:bg-gray-50 text-xs"
               >
                 Fiz o caminho de migrar meu número do WhatsApp Business (profissional) para o WhatsApp Comum (pessoal) e já voltei ele para o WhatsApp Business (profissional) novamente
               </button>
@@ -731,7 +731,7 @@ export default function ConnectionWizardPage() {
       case 'stage_3_meta_lost_access_path_2':
         return (
           <div className="space-y-5 animate-fadeIn max-w-xl mx-auto text-center">
-            <div className="bg-gray-50 p-5 rounded-2xl border border-green-100">
+            <div className="bg-gray-50 p-5 rounded-2xl border-2 border-gray-200">
               <div className="text-4xl mb-3">✅</div>
               <h2 className="text-xl font-bold text-gray-900 mb-3">Ótimo! Migração Concluída</h2>
               <p className="text-gray-600 mb-4 text-sm">
@@ -739,7 +739,7 @@ export default function ConnectionWizardPage() {
               </p>
               <button
                 onClick={() => goToStep('step_inside_system')}
-                className="w-full p-3 bg-green-600 text-white rounded-xl font-bold hover:bg-green-700 text-sm"
+                className="w-full p-3 bg-gray-900 text-white rounded-xl font-bold hover:bg-gray-800 text-sm"
               >
                 Continuar para Conectar
               </button>
@@ -1799,7 +1799,7 @@ export default function ConnectionWizardPage() {
                 </div>
               </div>
               <div className="grid gap-2 mt-5">
-                <button onClick={() => window.location.reload()} className="w-full py-3 bg-green-600 text-white font-bold rounded-xl hover:bg-green-700 transition-colors shadow-lg text-sm">Concluir</button>
+                <button onClick={() => window.location.reload()} className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors shadow-lg text-sm">Concluir</button>
                 <button onClick={() => goToStep('step_model_2_fuso')} className="w-full py-3 text-gray-500 hover:text-gray-800 font-medium transition-colors">Voltar etapa anterior</button>
               </div>
             </div>
