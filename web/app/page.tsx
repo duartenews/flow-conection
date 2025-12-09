@@ -990,63 +990,48 @@ export default function ConnectionWizardPage() {
 
             <div className="space-y-3">
               <p className="text-xs text-gray-600 text-center">Abrirá uma tela de conexão do Facebook</p>
-              <h3 className="text-base font-bold text-gray-900 text-center">Qual dos dois modelos de tela aparece para você:</h3>
+              <h3 className="text-base font-bold text-gray-900 text-center mb-4">Qual dos dois modelos de tela aparece para você:</h3>
 
-              {/* Model comparison - Vertical stack - Clickable cards */}
-              <div className="grid grid-cols-2 gap-3">
+              {/* Model comparison - Vertical stack - Clickable images only */}
+              <div className="grid grid-cols-1 gap-4 max-w-md mx-auto">
                 <button 
                   onClick={() => goToStep('step_model_1')}
-                  className="text-left"
+                  className="w-full group"
                 >
-                  <div className="bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-gray-900 hover:shadow-lg transition-all cursor-pointer">
-                    <h4 className="text-sm font-bold text-gray-800 text-center mt-2">Modelo 1</h4>
-                    <img
-                      src="/mod-1.png"
-                      alt="Modelo 1"
-                      className="w-full h-auto max-h-36 object-contain"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).style.display = 'none';
-                        (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-4"><span class="text-gray-500 text-xs">📷 mod-1.png</span></div>';
-                      }}
-                    />
+                  <div className="bg-white rounded-xl overflow-hidden border-2 border-gray-300 hover:border-gray-900 hover:shadow-xl transition-all cursor-pointer p-3">
+                    <div className="w-[90%] mx-auto">
+                      <img
+                        src="/mod-1.png"
+                        alt="Modelo 1"
+                        className="w-full h-auto object-contain"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).style.display = 'none';
+                          (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-4"><span class="text-gray-500 text-xs">📷 mod-1.png</span></div>';
+                        }}
+                      />
+                    </div>
+                    <p className="text-center text-xs text-gray-500 group-hover:text-gray-900 font-medium mt-2">Clique se esta é sua tela</p>
                   </div>
                 </button>
                 <button 
                   onClick={() => goToStep('step_model_2')}
-                  className="text-left"
+                  className="w-full group"
                 >
-                  <div className="bg-gray-100 rounded-lg overflow-hidden border-2 border-gray-200 hover:border-gray-900 hover:shadow-lg transition-all cursor-pointer">
-                    <h4 className="text-sm font-bold text-gray-800 text-center mt-2">Modelo 2</h4>
-                    <img
-                      src="/mod-2.png"
-                      alt="Modelo 2"
-                      className="w-full h-auto max-h-36 object-contain"
-                      onError={(e) => {
-                        (e.target as HTMLImageElement).style.display = 'none';
-                        (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-4"><span class="text-gray-500 text-xs">📷 mod-2.png</span></div>';
-                      }}
-                    />
+                  <div className="bg-white rounded-xl overflow-hidden border-2 border-gray-300 hover:border-gray-900 hover:shadow-xl transition-all cursor-pointer p-3">
+                    <div className="w-[90%] mx-auto">
+                      <img
+                        src="/mod-2.png"
+                        alt="Modelo 2"
+                        className="w-full h-auto object-contain"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).style.display = 'none';
+                          (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-4"><span class="text-gray-500 text-xs">📷 mod-2.png</span></div>';
+                        }}
+                      />
+                    </div>
+                    <p className="text-center text-xs text-gray-500 group-hover:text-gray-900 font-medium mt-2">Clique se esta é sua tela</p>
                   </div>
                 </button>
-              </div>
-
-              {/* Buttons */}
-              <div className="pt-3 space-y-2 pb-4">
-                <p className="text-center font-medium text-gray-900 text-sm">Meu caso é o:</p>
-                <div className="grid grid-cols-2 gap-3">
-                  <button
-                    onClick={() => goToStep('step_model_1')}
-                    className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors text-sm"
-                  >
-                    Modelo 1
-                  </button>
-                  <button
-                    onClick={() => goToStep('step_model_2')}
-                    className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors text-sm"
-                  >
-                    Modelo 2
-                  </button>
-                </div>
               </div>
             </div>
           </div>
@@ -1094,16 +1079,18 @@ export default function ConnectionWizardPage() {
               <p className="text-xs text-gray-500 font-bold tracking-wider uppercase mb-1">{model1Slides[currentSlide].subtitle}</p>
               <h3 className="text-lg font-bold text-gray-900 mb-4">{model1Slides[currentSlide].title}</h3>
 
-              <div className="rounded-lg overflow-hidden mb-4 bg-gray-50 border border-gray-100 max-w-md lg:max-w-lg mx-auto">
-                <img
-                  src={model1Slides[currentSlide].image}
-                  alt={model1Slides[currentSlide].title}
-                  className="w-full h-auto max-h-56 lg:max-h-96 object-contain"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = 'none';
-                    (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-4"><span class="text-gray-500 text-xs">📷 Imagem: ' + model1Slides[currentSlide].image + '</span></div>';
-                  }}
-                />
+              <div className="rounded-lg overflow-hidden mb-4 bg-gray-50 border border-gray-100 max-w-md lg:max-w-lg mx-auto p-3">
+                <div className="w-[90%] mx-auto">
+                  <img
+                    src={model1Slides[currentSlide].image}
+                    alt={model1Slides[currentSlide].title}
+                    className="w-full h-auto max-h-56 lg:max-h-96 object-contain"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).style.display = 'none';
+                      (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-4"><span class="text-gray-500 text-xs">📷 Imagem: ' + model1Slides[currentSlide].image + '</span></div>';
+                    }}
+                  />
+                </div>
               </div>
 
               {model1Slides[currentSlide].description && model1Slides[currentSlide].description}
@@ -1257,29 +1244,33 @@ export default function ConnectionWizardPage() {
 
               {/* Image Container - Handles single or dual images (hidden for slide 4 which has images in buttons) */}
               {currentSlide !== 4 && (
-                <div className={`rounded-lg overflow-hidden mb-4 bg-gray-50 border border-gray-100 ${'secondaryImage' in model2Slides[currentSlide] ? 'grid grid-cols-2 gap-2 max-w-4xl mx-auto' : 'max-w-md lg:max-w-lg mx-auto'}`}>
-                  <img
-                    src={model2Slides[currentSlide].image}
-                    alt={model2Slides[currentSlide].title}
-                    className="w-full h-auto max-h-56 lg:max-h-96 object-contain"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).style.display = 'none';
-                      (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-4"><span class="text-gray-500 text-xs">📷 ' + model2Slides[currentSlide].image + '</span></div>';
-                    }}
-                  />
-                  {'secondaryImage' in model2Slides[currentSlide] && (
+                <div className={`rounded-lg overflow-hidden mb-4 bg-gray-50 border border-gray-100 p-3 ${'secondaryImage' in model2Slides[currentSlide] ? 'grid grid-cols-2 gap-2 max-w-4xl mx-auto' : 'max-w-md lg:max-w-lg mx-auto'}`}>
+                  <div className="w-[90%] mx-auto">
                     <img
-                      // @ts-ignore - checking generic object property
-                      src={model2Slides[currentSlide].secondaryImage}
-                      alt={model2Slides[currentSlide].title + ' part 2'}
+                      src={model2Slides[currentSlide].image}
+                      alt={model2Slides[currentSlide].title}
                       className="w-full h-auto max-h-56 lg:max-h-96 object-contain"
                       onError={(e) => {
-                      (e.target as HTMLImageElement).style.display = 'none';
-                      // @ts-ignore
-                      (e.target as HTMLImageElement).parentElement!.innerHTML += '<div class="flex items-center justify-center p-4"><span class="text-gray-500 text-xs">📷 ' + model2Slides[currentSlide].secondaryImage + '</span></div>';
-                    }}
-                  />
-                )}
+                        (e.target as HTMLImageElement).style.display = 'none';
+                        (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-4"><span class="text-gray-500 text-xs">📷 ' + model2Slides[currentSlide].image + '</span></div>';
+                      }}
+                    />
+                  </div>
+                  {'secondaryImage' in model2Slides[currentSlide] && (
+                    <div className="w-[90%] mx-auto">
+                      <img
+                        // @ts-ignore - checking generic object property
+                        src={model2Slides[currentSlide].secondaryImage}
+                        alt={model2Slides[currentSlide].title + ' part 2'}
+                        className="w-full h-auto max-h-56 lg:max-h-96 object-contain"
+                        onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = 'none';
+                        // @ts-ignore
+                        (e.target as HTMLImageElement).parentElement!.innerHTML += '<div class="flex items-center justify-center p-4"><span class="text-gray-500 text-xs">📷 ' + model2Slides[currentSlide].secondaryImage + '</span></div>';
+                      }}
+                      />
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -1449,16 +1440,18 @@ export default function ConnectionWizardPage() {
                     <p className="text-xs text-gray-700 text-center px-1">
                       <strong>{iphoneSlides[currentSlide].descriptions[index]}</strong>
                     </p>
-                    <div className="rounded-lg overflow-hidden bg-gray-50 border border-gray-100">
-                      <img 
-                        src={image} 
-                        alt={`iPhone Step ${index + 1}`}
-                        className="w-full h-auto max-h-48 lg:max-h-80 object-contain"
-                        onError={(e) => { 
-                          (e.target as HTMLImageElement).style.display = 'none'; 
-                          (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 ' + image + '</span></div>'; 
-                        }} 
-                      />
+                    <div className="rounded-lg overflow-hidden bg-gray-50 border border-gray-100 p-2">
+                      <div className="w-[90%] mx-auto">
+                        <img 
+                          src={image} 
+                          alt={`iPhone Step ${index + 1}`}
+                          className="w-full h-auto max-h-48 lg:max-h-80 object-contain"
+                          onError={(e) => { 
+                            (e.target as HTMLImageElement).style.display = 'none'; 
+                            (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 ' + image + '</span></div>'; 
+                          }} 
+                        />
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -1568,16 +1561,18 @@ export default function ConnectionWizardPage() {
                     <p className="text-xs text-gray-700 text-center px-1">
                       <strong>{androidSlides[currentSlide].descriptions[index]}</strong>
                     </p>
-                    <div className="rounded-lg overflow-hidden bg-gray-50 border border-gray-100">
-                      <img 
-                        src={image} 
-                        alt={`Android Step ${index + 1}`}
-                        className="w-full h-auto max-h-48 lg:max-h-80 object-contain"
-                        onError={(e) => { 
-                          (e.target as HTMLImageElement).style.display = 'none'; 
-                          (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 ' + image + '</span></div>'; 
-                        }} 
-                      />
+                    <div className="rounded-lg overflow-hidden bg-gray-50 border border-gray-100 p-2">
+                      <div className="w-[90%] mx-auto">
+                        <img 
+                          src={image} 
+                          alt={`Android Step ${index + 1}`}
+                          className="w-full h-auto max-h-48 lg:max-h-80 object-contain"
+                          onError={(e) => { 
+                            (e.target as HTMLImageElement).style.display = 'none'; 
+                            (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 ' + image + '</span></div>'; 
+                          }} 
+                        />
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -1663,16 +1658,18 @@ export default function ConnectionWizardPage() {
                         <strong>{novoNumeroSlides[currentSlide].descriptions[index]}</strong>
                       </p>
                     )}
-                    <div className="rounded-lg overflow-hidden bg-gray-50 border border-gray-100">
-                      <img 
-                        src={image} 
-                        alt={`Step ${index + 1}`}
-                        className="w-full h-auto max-h-48 lg:max-h-80 object-contain"
-                        onError={(e) => { 
-                          (e.target as HTMLImageElement).style.display = 'none'; 
-                          (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 ' + image + '</span></div>'; 
-                        }} 
-                      />
+                    <div className="rounded-lg overflow-hidden bg-gray-50 border border-gray-100 p-2">
+                      <div className="w-[90%] mx-auto">
+                        <img 
+                          src={image} 
+                          alt={`Step ${index + 1}`}
+                          className="w-full h-auto max-h-48 lg:max-h-80 object-contain"
+                          onError={(e) => { 
+                            (e.target as HTMLImageElement).style.display = 'none'; 
+                            (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 ' + image + '</span></div>'; 
+                          }} 
+                        />
+                      </div>
                     </div>
                   </div>
                 ))}
@@ -1775,27 +1772,31 @@ export default function ConnectionWizardPage() {
 
               {/* Duas imagens lado a lado */}
               <div className="grid grid-cols-2 gap-3 mb-4 max-w-2xl lg:max-w-4xl mx-auto">
-                <div className="rounded-lg overflow-hidden bg-gray-50 border border-gray-100">
-                  <img 
-                    src="/conectando.png" 
-                    alt="Conectando" 
-                    className="w-full h-auto max-h-44 lg:max-h-80 object-contain" 
-                    onError={(e) => { 
-                      (e.target as HTMLImageElement).style.display = 'none'; 
-                      (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 /conectando.png</span></div>'; 
-                    }} 
-                  />
+                <div className="rounded-lg overflow-hidden bg-gray-50 border border-gray-100 p-2">
+                  <div className="w-[90%] mx-auto">
+                    <img 
+                      src="/conectando.png" 
+                      alt="Conectando" 
+                      className="w-full h-auto max-h-44 lg:max-h-80 object-contain" 
+                      onError={(e) => { 
+                        (e.target as HTMLImageElement).style.display = 'none'; 
+                        (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 /conectando.png</span></div>'; 
+                      }} 
+                    />
+                  </div>
                 </div>
-                <div className="rounded-lg overflow-hidden bg-gray-50 border border-gray-100">
-                  <img 
-                    src="/concluir.png" 
-                    alt="Concluir" 
-                    className="w-full h-auto max-h-44 lg:max-h-80 object-contain" 
-                    onError={(e) => { 
-                      (e.target as HTMLImageElement).style.display = 'none'; 
-                      (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 /concluir.png</span></div>'; 
-                    }} 
-                  />
+                <div className="rounded-lg overflow-hidden bg-gray-50 border border-gray-100 p-2">
+                  <div className="w-[90%] mx-auto">
+                    <img 
+                      src="/concluir.png" 
+                      alt="Concluir" 
+                      className="w-full h-auto max-h-44 lg:max-h-80 object-contain" 
+                      onError={(e) => { 
+                        (e.target as HTMLImageElement).style.display = 'none'; 
+                        (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 /concluir.png</span></div>'; 
+                      }} 
+                    />
+                  </div>
                 </div>
               </div>
               <div className="grid gap-2 mt-5">
