@@ -788,7 +788,7 @@ export default function ConnectionWizardPage() {
                     <img
                       src={slide.image}
                       alt={slide.title}
-                      className="w-full h-auto max-h-48 object-contain"
+                      className="w-full h-auto max-h-[260px] object-contain"
                       onError={(e) => {
                         (e.target as HTMLImageElement).style.display = 'none';
                         (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-4"><span class="text-gray-500 text-xs">📷 Imagem: ' + slide.image + '</span></div>';
@@ -836,7 +836,7 @@ export default function ConnectionWizardPage() {
                 <img
                   src="/close-all.png"
                   alt="Fechar guias do Facebook"
-                  className="w-full h-auto max-h-32 object-contain"
+                  className="w-full h-auto max-h-[260px] object-contain"
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                     (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-4"><span class="text-gray-500 text-xs">📷 Imagem: /close-all.png</span></div>';
@@ -852,7 +852,7 @@ export default function ConnectionWizardPage() {
                 <img
                   src="/close-mac.png"
                   alt="Verificar guias no Mac"
-                  className="w-full h-auto max-h-32 object-contain"
+                  className="w-full h-auto max-h-[260px] object-contain"
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                     (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-4"><span class="text-gray-500 text-xs">📷 Imagem: /close-mac.png</span></div>';
@@ -909,7 +909,7 @@ export default function ConnectionWizardPage() {
                 <img
                   src="/close-all.png"
                   alt="Fechar guias do Facebook"
-                  className="w-full h-auto max-h-32 object-contain"
+                  className="w-full h-auto max-h-[260px] object-contain"
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                     (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-4"><span class="text-gray-500 text-xs">📷 Imagem: /close-all.png</span></div>';
@@ -925,7 +925,7 @@ export default function ConnectionWizardPage() {
                 <img
                   src="/close-wind.jpg"
                   alt="Verificar guias no Windows"
-                  className="w-full h-auto max-h-32 object-contain"
+                  className="w-full h-auto max-h-[260px] object-contain"
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                     (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-4"><span class="text-gray-500 text-xs">📷 Imagem: /close-wind.jpg</span></div>';
@@ -972,7 +972,7 @@ export default function ConnectionWizardPage() {
                 <img
                   src="/4.png"
                   alt="Botão verde de conectar"
-                  className="w-full h-auto max-h-40 object-contain"
+                  className="w-full h-auto max-h-[260px] object-contain"
                   onError={(e) => {
                     (e.target as HTMLImageElement).style.display = 'none';
                     (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-4"><span class="text-gray-500 text-xs">📷 Imagem: /4.png</span></div>';
@@ -1084,7 +1084,7 @@ export default function ConnectionWizardPage() {
                   <img
                     src={model1Slides[currentSlide].image}
                     alt={model1Slides[currentSlide].title}
-                    className="w-full h-auto max-h-56 lg:max-h-96 object-contain"
+                    className="w-full h-auto max-h-[260px] lg:max-h-96 object-contain"
                     onError={(e) => {
                       (e.target as HTMLImageElement).style.display = 'none';
                       (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-4"><span class="text-gray-500 text-xs">📷 Imagem: ' + model1Slides[currentSlide].image + '</span></div>';
@@ -1190,7 +1190,7 @@ export default function ConnectionWizardPage() {
                 >
                   <p className="font-bold text-gray-800 text-base mb-2">1. Vejo um QR Code</p>
                   <div className="rounded-lg overflow-hidden bg-white">
-                    <img src="/qr-code-new0.png" alt="QR Code" className="w-full h-auto max-h-28 object-contain" />
+                    <img src="/qr-code-new0.png" alt="QR Code" className="w-full h-auto max-h-[260px] object-contain" />
                   </div>
                 </button>
                 
@@ -1200,7 +1200,7 @@ export default function ConnectionWizardPage() {
                 >
                   <p className="font-bold text-gray-800 text-base mb-2">2. Vejo essa tela para adicionar número</p>
                   <div className="rounded-lg overflow-hidden bg-white">
-                    <img src="/mod2-new0.png" alt="Tela adicionar número" className="w-full h-auto max-h-28 object-contain" />
+                    <img src="/mod2-new0.png" alt="Tela adicionar número" className="w-full h-auto max-h-[260px] object-contain" />
                   </div>
                 </button>
               </div>
@@ -1249,7 +1249,7 @@ export default function ConnectionWizardPage() {
                     <img
                       src={model2Slides[currentSlide].image}
                       alt={model2Slides[currentSlide].title}
-                      className="w-full h-auto max-h-56 lg:max-h-96 object-contain"
+                      className="w-full h-auto max-h-[260px] lg:max-h-96 object-contain"
                       onError={(e) => {
                         (e.target as HTMLImageElement).style.display = 'none';
                         (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-4"><span class="text-gray-500 text-xs">📷 ' + model2Slides[currentSlide].image + '</span></div>';
@@ -1262,7 +1262,7 @@ export default function ConnectionWizardPage() {
                         // @ts-ignore - checking generic object property
                         src={model2Slides[currentSlide].secondaryImage}
                         alt={model2Slides[currentSlide].title + ' part 2'}
-                        className="w-full h-auto max-h-56 lg:max-h-96 object-contain"
+                        className="w-full h-auto max-h-[260px] lg:max-h-96 object-contain"
                         onError={(e) => {
                         (e.target as HTMLImageElement).style.display = 'none';
                         // @ts-ignore
@@ -1339,7 +1339,7 @@ export default function ConnectionWizardPage() {
                   <img 
                     src="/qr-code.png" 
                     alt="QR Code" 
-                    className="w-full h-auto max-h-32 object-contain"
+                    className="w-full h-auto max-h-[260px] object-contain"
                     onError={(e) => { 
                       (e.target as HTMLImageElement).style.display = 'none'; 
                       (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 qr-code.png</span></div>'; 
@@ -1350,7 +1350,7 @@ export default function ConnectionWizardPage() {
                   <img 
                     src="/scan-qr.png" 
                     alt="Scan QR" 
-                    className="w-full h-auto max-h-32 object-contain"
+                    className="w-full h-auto max-h-[260px] object-contain"
                     onError={(e) => { 
                       (e.target as HTMLImageElement).style.display = 'none'; 
                       (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 scan-qr.png</span></div>'; 
@@ -1361,7 +1361,7 @@ export default function ConnectionWizardPage() {
                   <img 
                     src="/scan-qr2.png" 
                     alt="Scan QR 2" 
-                    className="w-full h-auto max-h-32 object-contain"
+                    className="w-full h-auto max-h-[260px] object-contain"
                     onError={(e) => { 
                       (e.target as HTMLImageElement).style.display = 'none'; 
                       (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 scan-qr2.png</span></div>'; 
@@ -1445,7 +1445,7 @@ export default function ConnectionWizardPage() {
                         <img 
                           src={image} 
                           alt={`iPhone Step ${index + 1}`}
-                          className="w-full h-auto max-h-48 lg:max-h-80 object-contain"
+                          className="w-full h-auto max-h-[260px] lg:max-h-80 object-contain"
                           onError={(e) => { 
                             (e.target as HTMLImageElement).style.display = 'none'; 
                             (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 ' + image + '</span></div>'; 
@@ -1566,7 +1566,7 @@ export default function ConnectionWizardPage() {
                         <img 
                           src={image} 
                           alt={`Android Step ${index + 1}`}
-                          className="w-full h-auto max-h-48 lg:max-h-80 object-contain"
+                          className="w-full h-auto max-h-[260px] lg:max-h-80 object-contain"
                           onError={(e) => { 
                             (e.target as HTMLImageElement).style.display = 'none'; 
                             (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 ' + image + '</span></div>'; 
@@ -1663,7 +1663,7 @@ export default function ConnectionWizardPage() {
                         <img 
                           src={image} 
                           alt={`Step ${index + 1}`}
-                          className="w-full h-auto max-h-48 lg:max-h-80 object-contain"
+                          className="w-full h-auto max-h-[260px] lg:max-h-80 object-contain"
                           onError={(e) => { 
                             (e.target as HTMLImageElement).style.display = 'none'; 
                             (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 ' + image + '</span></div>'; 
@@ -1737,7 +1737,7 @@ export default function ConnectionWizardPage() {
                 Após conectar, basta escolher o fuso horário, se estiver no horário de Brasília digite: <strong>São Paulo</strong> (será a opção América/São Paulo).
               </p>
               <div className="rounded-lg overflow-hidden mb-4 bg-gray-50 border border-gray-100 max-w-xs mx-auto">
-                <img src="/fuso-horario.png" alt="Fuso Horário" className="w-full h-auto max-h-48 object-contain" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 /fuso-horario.png</span></div>'; }} />
+                <img src="/fuso-horario.png" alt="Fuso Horário" className="w-full h-auto max-h-[260px] object-contain" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 /fuso-horario.png</span></div>'; }} />
               </div>
               <div className="grid gap-2 mt-5">
                 <button onClick={() => goToStep('step_model_2_conclusao')} className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors shadow-lg text-sm">Próxima etapa</button>
@@ -1777,7 +1777,7 @@ export default function ConnectionWizardPage() {
                     <img 
                       src="/conectando.png" 
                       alt="Conectando" 
-                      className="w-full h-auto max-h-44 lg:max-h-80 object-contain" 
+                      className="w-full h-auto max-h-[260px] lg:max-h-80 object-contain" 
                       onError={(e) => { 
                         (e.target as HTMLImageElement).style.display = 'none'; 
                         (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 /conectando.png</span></div>'; 
@@ -1790,7 +1790,7 @@ export default function ConnectionWizardPage() {
                     <img 
                       src="/concluir.png" 
                       alt="Concluir" 
-                      className="w-full h-auto max-h-44 lg:max-h-80 object-contain" 
+                      className="w-full h-auto max-h-[260px] lg:max-h-80 object-contain" 
                       onError={(e) => { 
                         (e.target as HTMLImageElement).style.display = 'none'; 
                         (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-2"><span class="text-gray-500 text-xs">📷 /concluir.png</span></div>'; 
