@@ -476,7 +476,7 @@ export default function ConnectionWizardPage() {
       case 'stage_3_traffic_source':
         return (
           <div className="space-y-8 animate-fadeIn max-w-xl mx-auto">
-            <h2 className="text-2xl font-bold text-gray-900 text-center">Como você roda seus anúncios?</h2>
+            <h2 className="text-2xl font-bold text-gray-900 text-center">Como você roda/rodava seus anúncios?</h2>
 
             <div className="space-y-4">
               <button
