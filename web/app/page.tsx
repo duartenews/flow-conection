@@ -367,7 +367,7 @@ export default function ConnectionWizardPage() {
         return (
           <div className="space-y-8">
             <p className="text-xl sm:text-2xl text-gray-600 text-center">
-              O que você tem em mãos agora?
+              Quais dispositivos você tem disponível agora?
             </p>
 
             <div className="space-y-6 max-w-md mx-auto">
@@ -583,7 +583,7 @@ export default function ConnectionWizardPage() {
       case 'stage_2_computer_no_mobile':
         return (
           <div className="space-y-4 text-center animate-fadeIn max-w-xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">É preciso que você esteja com o aparelho onde está o WhatsApp Business (profissional) em mãos para continuar a conexão.</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">É preciso que você esteja com o aparelho que está o WhatsApp Business (profissional) em mãos para continuar a conexão.</h2>
             <div className="grid gap-2 pt-3">
               <button
                 onClick={() => {
@@ -592,7 +592,7 @@ export default function ConnectionWizardPage() {
                 }}
                 className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors text-lg sm:text-xl"
               >
-                Estou com o celular aqui
+                Estou com o aparelho que está o WhatsApp Business (profissional) agora.
               </button>
               <button
                 onClick={() => setShowMobileWarning(true)}
@@ -619,13 +619,13 @@ export default function ConnectionWizardPage() {
                 onClick={() => goToStep('stage_2_os_selection')}
                 className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors shadow-sm text-lg sm:text-xl"
               >
-                Sim, uso o WhatsApp Business (profissional) nele
+                Sim, uso o WhatsApp Business (profissional) nesse tablet/ipad.
               </button>
               <button
                 onClick={() => goToStep('stage_2_computer_no_mobile')}
                 className="w-full py-3 bg-white text-gray-700 border border-gray-300 font-bold rounded-xl hover:bg-gray-50 transition-colors text-lg sm:text-xl"
               >
-                Na verdade não estou com o WhatsApp Business (profissional) aqui
+                Na verdade o aparelho que está com o WhatsApp Business (profissional) não está comigo agora.
               </button>
             </div>
             <button onClick={() => goToStep('stage_2_devices')} className="text-gray-500 hover:text-gray-800 underline mt-3 text-base sm:text-lg">Voltar</button>
@@ -638,7 +638,7 @@ export default function ConnectionWizardPage() {
       case 'stage_3_traffic_check':
         return (
           <div className="space-y-5 animate-fadeIn max-w-xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center">Sobre Tráfego Pago</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center">Aperfeiçoando o melhor caminho para sua conexão...</h2>
             <p className="text-xl sm:text-2xl text-gray-600 text-center">
               Você roda tráfego pago <strong>direcionado para o número que você deseja conectar</strong>?
             </p>
@@ -840,26 +840,26 @@ export default function ConnectionWizardPage() {
       case 'stage_3_meta_lost_access_options':
         return (
           <div className="space-y-4 animate-fadeIn max-w-2xl mx-auto">
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-center">Ainda Há Esperança!</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 text-left">Ainda Há Esperança!</h2>
 
-            <div className="bg-gray-50 p-4 rounded-xl space-y-4 text-gray-700 text-lg sm:text-xl">
+            <div className="bg-gray-50 p-4 rounded-xl space-y-4 text-gray-700 text-base sm:text-lg text-left">
               <div>
-                <h3 className="font-bold text-xl sm:text-2xl text-gray-900 mb-2">Tentativa 1 (Simples):</h3>
-                <p>Tentar conectar com outro Facebook mesmo assim. Pode dar erro, mas se der, nós te ajudaremos lá na frente.</p>
+                <h3 className="font-bold text-xl sm:text-2xl text-gray-900 mb-2 text-left">Tentativa 1 (Simples):</h3>
+                <p className="text-left">Tentar conectar com outro Facebook mesmo assim. Pode dar erro, mas se der, nós te ajudaremos lá na frente.</p>
               </div>
 
               <hr className="border-gray-200" />
 
               <div>
-                <h3 className="font-bold text-xl sm:text-2xl text-gray-900 mb-2">Tentativa 2 (Avançada):</h3>
-                <p className="mb-2">Para desvincular esse número do seu Facebook que não tem mais acesso você deve:</p>
-                <ol className="list-decimal pl-4 space-y-1 text-base sm:text-lg">
+                <h3 className="font-bold text-xl sm:text-2xl text-gray-900 mb-2 text-left">Tentativa 2 (Avançada):</h3>
+                <p className="mb-2 text-left">Para desvincular esse número do seu Facebook que não tem mais acesso você deve:</p>
+                <ol className="list-decimal pl-4 space-y-1 text-base sm:text-lg text-left">
                   <li>Migrar o número que deseja conectar do aplicativo <strong>WhatsApp Business (profissional)</strong> para um <strong>WhatsApp Comum (pessoal)</strong>. Ao fazer essa migração certifique-se de importar suas conversas, para que não perca nada.</li>
                   <li>Esperar algumas horas</li>
                   <li>Voltar esse número que estará no WhatsApp Comum (pessoal) para um aplicativo de <strong>WhatsApp Business (profissional)</strong>. E fazer a conexão sem se preocupar com qual conta de Facebook deve entrar.</li>
                 </ol>
                 <div className="bg-gray-100 p-3 rounded-lg border border-gray-300 mt-3">
-                  <p className="text-gray-800 text-base sm:text-lg"><strong>💡 Resultado:</strong> Isso "desvincula" o número da conta perdida do Facebook à força. E o torna livre para conectar em qualquer conta de Facebook.</p>
+                  <p className="text-gray-800 text-base sm:text-lg text-left"><strong>💡 Resultado:</strong> Isso "desvincula" o número da conta perdida do Facebook à força. E o torna livre para conectar em qualquer conta de Facebook.</p>
                 </div>
               </div>
             </div>
@@ -1025,7 +1025,7 @@ export default function ConnectionWizardPage() {
                 <div className="text-2xl shrink-0">⚠️</div>
                 <div className="space-y-2">
                   <p className="text-yellow-900 text-base sm:text-lg font-medium">
-                    <strong>Observação:</strong> É importante que você feche todas as guias de conexão do Facebook, e apenas depois de fechar tudo clique novamente no botão verde para iniciar em uma nova guia de conexão, com a certeza de que é a única aberta.
+                    <strong>Observação:</strong> É necessário que você feche todas as guias de conexão do Facebook, e apenas depois de fechar tudo clique novamente no botão verde para iniciar em uma nova guia de conexão, com a certeza de que é a única aberta.
                   </p>
                   <p className="text-yellow-800 text-base sm:text-lg">
                     <strong>Importante:</strong> Em todos os casos que precise reiniciar o fluxo de conexão, lembre-se de fechar novamente todas as guias do Facebook.
@@ -1098,7 +1098,7 @@ export default function ConnectionWizardPage() {
                 <div className="text-2xl shrink-0">⚠️</div>
                 <div className="space-y-2">
                   <p className="text-yellow-900 text-base sm:text-lg font-medium">
-                    <strong>Observação:</strong> É importante que você feche todas as guias de conexão do Facebook, e apenas depois de fechar tudo clique novamente no botão verde para iniciar em uma nova guia de conexão, com a certeza de que é a única aberta.
+                    <strong>Observação:</strong> É necessário que você feche todas as guias de conexão do Facebook, e apenas depois de fechar tudo clique novamente no botão verde para iniciar em uma nova guia de conexão, com a certeza de que é a única aberta.
                   </p>
                   <p className="text-yellow-800 text-base sm:text-lg">
                     <strong>Importante:</strong> Em todos os casos que precise reiniciar o fluxo de conexão, lembre-se de fechar novamente todas as guias do Facebook.
