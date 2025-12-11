@@ -210,7 +210,7 @@ const CelebrationScreen = () => {
           Parabéns!
         </h1>
         <p className="text-xl sm:text-2xl text-gray-600">
-          Conexão realizada com sucesso! ✨
+          Conexão realizada com sucesso!
         </p>
       </div>
     </div>
