@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, ReactNode } from 'react';
+import React, { useState, useEffect, ReactNode, useCallback } from 'react';
+import confetti from 'canvas-confetti';
 
 // --- Types ---
 
@@ -41,7 +42,8 @@ type StepId =
   | 'step_model_2_nao_android'
   | 'step_model_2_novo_numero'
   | 'step_model_2_fuso'
-  | 'step_model_2_conclusao';
+  | 'step_model_2_conclusao'
+  | 'step_celebration';
 
 type DeviceState = {
   computer: boolean;
@@ -92,6 +94,128 @@ const AndroidIcon = () => (
     <path d="M420.55,301.93a24,24,0,1,1,24-24,24,24,0,0,1-24,24m-265.1,0a24,24,0,1,1,24-24,24,24,0,0,1-24,24m273.7-144.48,47.94-83a10,10,0,1,0-17.36-10l-48.53,84.07a219.04,219.04,0,0,0-246.4,0l-48.53-84.07a10,10,0,1,0-17.36,10l47.94,83C64.53,202.22,8.24,285.55,0,384H576c-8.24-98.45-64.54-181.78-146.85-226.55" />
   </svg>
 );
+
+// --- Celebration Screen Component ---
+
+const CelebrationScreen = () => {
+  useEffect(() => {
+    // Função para disparar confetes
+    const fireConfetti = () => {
+      const count = 200;
+      const defaults = {
+        origin: { y: 0.7 },
+        zIndex: 1000,
+      };
+
+      function fire(particleRatio: number, opts: confetti.Options) {
+        confetti({
+          ...defaults,
+          ...opts,
+          particleCount: Math.floor(count * particleRatio),
+        });
+      }
+
+      // Explosão inicial - múltiplas rajadas
+      fire(0.25, {
+        spread: 26,
+        startVelocity: 55,
+        origin: { x: 0.5, y: 0.7 },
+      });
+
+      fire(0.2, {
+        spread: 60,
+        origin: { x: 0.5, y: 0.7 },
+      });
+
+      fire(0.35, {
+        spread: 100,
+        decay: 0.91,
+        scalar: 0.8,
+        origin: { x: 0.5, y: 0.7 },
+      });
+
+      fire(0.1, {
+        spread: 120,
+        startVelocity: 25,
+        decay: 0.92,
+        scalar: 1.2,
+        origin: { x: 0.5, y: 0.7 },
+      });
+
+      fire(0.1, {
+        spread: 120,
+        startVelocity: 45,
+        origin: { x: 0.5, y: 0.7 },
+      });
+
+      // Confetes dos lados
+      setTimeout(() => {
+        confetti({
+          particleCount: 100,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 },
+          zIndex: 1000,
+        });
+        confetti({
+          particleCount: 100,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 },
+          zIndex: 1000,
+        });
+      }, 200);
+
+      // Segunda onda
+      setTimeout(() => {
+        confetti({
+          particleCount: 150,
+          spread: 100,
+          origin: { x: 0.5, y: 0.6 },
+          zIndex: 1000,
+        });
+      }, 400);
+    };
+
+    // Dispara os confetes ao montar o componente
+    fireConfetti();
+
+    // Dispara novamente após 1 segundo para efeito contínuo
+    const timeout = setTimeout(() => {
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { x: 0.3, y: 0.6 },
+        zIndex: 1000,
+      });
+      confetti({
+        particleCount: 80,
+        spread: 70,
+        origin: { x: 0.7, y: 0.6 },
+        zIndex: 1000,
+      });
+    }, 1000);
+
+    return () => clearTimeout(timeout);
+  }, []);
+
+  return (
+    <div className="fixed inset-0 w-screen h-screen flex flex-col items-center justify-center bg-white">
+      {/* Ícone no topo - não conta para centralização */}
+      <div className="absolute top-[29vh] text-8xl sm:text-9xl animate-bounce">🎉</div>
+      
+      {/* Conteúdo centralizado - o texto é o que fica no centro */}
+      <div className="text-center space-y-6">
+        <h1 className="text-4xl sm:text-6xl font-bold text-gray-900">
+          Parabéns!
+        </h1>
+        <p className="text-xl sm:text-2xl text-gray-600">
+          Conexão realizada com sucesso! ✨
+        </p>
+      </div>
+    </div>
+  );
+};
 
 
 // --- Desktop Design System Helpers ---
@@ -293,6 +417,61 @@ export default function ConnectionWizardPage() {
     }
   }, [currentStep]);
 
+  // Expose debug functions to console
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      // @ts-ignore
+      window.goToStep = (step: StepId) => {
+        console.log(`🚀 Pulando para: ${step}`);
+        goToStep(step);
+      };
+      
+      // @ts-ignore
+      window.listSteps = () => {
+        const allSteps: StepId[] = [
+          'stage_1_whatsapp_type',
+          'stage_1_migrate_warning',
+          'stage_2_devices',
+          'stage_2_no_computer',
+          'stage_2_no_computer_support',
+          'stage_2_computer_no_mobile',
+          'stage_2_tablet_check',
+          'stage_2_os_selection',
+          'stage_3_traffic_check',
+          'stage_3_traffic_source',
+          'stage_3_any_facebook',
+          'stage_3_meta_access_check',
+          'stage_3_meta_access_uncertain',
+          'stage_3_meta_lost_access',
+          'stage_3_meta_lost_access_options',
+          'stage_3_meta_lost_access_path_2',
+          'step_inside_system',
+          'step_check_tabs_mac',
+          'step_check_tabs_windows',
+          'step_connection_start',
+          'step_model_1',
+          'step_model_2',
+          'step_model_2_sim',
+          'step_model_2_nao_iphone',
+          'step_model_2_nao_android',
+          'step_model_2_novo_numero',
+          'step_model_2_fuso',
+          'step_model_2_conclusao',
+          'step_celebration',
+        ];
+        console.log('📋 Todas as etapas disponíveis:');
+        allSteps.forEach((step, i) => console.log(`${i + 1}. ${step}`));
+        console.log('\n💡 Use: goToStep("nome_da_etapa") para pular');
+        console.log('Exemplo: goToStep("step_celebration")');
+      };
+
+      console.log('🎮 Comandos de debug disponíveis:');
+      console.log('- listSteps() - Lista todas as etapas');
+      console.log('- goToStep("nome_da_etapa") - Pula para uma etapa específica');
+      console.log('\n💡 Digite listSteps() para ver todas as opções');
+    }
+  }, []);
+
   // --- Step Rendering ---
 
   const renderStepBody = (): ReactNode => {
@@ -473,7 +652,7 @@ export default function ConnectionWizardPage() {
             {(devices.mobile || devices.tablet) && (
               <div className="space-y-4">
                 <p className="text-xl sm:text-2xl text-gray-600 text-center">
-                  {devices.computer ? '2. ' : ''}O aparelho <strong>onde está</strong> o WhatsApp Business é um:
+                  {devices.computer ? '2. ' : ''}O aparelho <strong>onde está</strong> o WhatsApp Business que deseja conectar é um:
                 </p>
                 <div className="grid grid-cols-2 gap-4">
                   <button
@@ -928,6 +1107,15 @@ export default function ConnectionWizardPage() {
         return (
 
           <div className="space-y-6 text-center animate-fadeIn max-w-2xl mx-auto">
+            {/* Header com logo SecretáriaPlus */}
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <img
+                src="https://secretariaplus.com.br/wp-content/uploads/2024/11/saodasd.svg"
+                alt="SecretáriaPlus"
+                className="h-12 object-contain"
+                style={{ filter: 'invert(1)' }}
+              />
+            </div>
             <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Dentro do Sistema</h2>
             <p className="text-xl sm:text-2xl text-gray-600">no menu lateral clique em Conexão WhatsApp</p>
 
@@ -976,18 +1164,18 @@ export default function ConnectionWizardPage() {
           <div className="space-y-4 text-center animate-fadeIn max-w-2xl mx-auto">
             <div className="flex flex-col items-center justify-center gap-1 mb-4">
               <AppleIcon />
-              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Feche as guias do Facebook (Macbook)</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">No Macbook, feche as guias do Facebook</h2>
             </div>
 
             <button
               onClick={() => goToStep('step_check_tabs_windows')}
-              className="text-base sm:text-lg text-gray-700 underline hover:text-gray-900"
+              className="text-base sm:text-lg text-gray-700 underline hover:text-gray-900 mb-8"
             >
               Na verdade agora estou em um Windows/outro
             </button>
 
             {/* Shared image - close all tabs */}
-            <div className="space-y-2 text-left">
+            <div className="space-y-2 text-left mt-8">
               <h3 className="text-lg sm:text-xl font-bold text-gray-900">Feche todas as guias do Facebook antes de clicar no botão verde de conectar:</h3>
               <p className="text-base sm:text-lg text-gray-600">Na parte superior do navegador, verifique se já não tem uma guia de conexão aberta:</p>
               <div className="bg-gray-100 rounded-lg overflow-hidden">
@@ -1049,18 +1237,18 @@ export default function ConnectionWizardPage() {
           <div className="space-y-4 text-center animate-fadeIn max-w-2xl mx-auto">
             <div className="flex flex-col items-center justify-center gap-1 mb-4">
               <WindowsIcon />
-              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">Feche as guias do Facebook (Windows/Outro)</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold text-gray-900">No Windows, feche as guias do Facebook</h2>
             </div>
 
             <button
               onClick={() => goToStep('step_check_tabs_mac')}
-              className="text-base sm:text-lg text-gray-700 underline hover:text-gray-900"
+              className="text-base sm:text-lg text-gray-700 underline hover:text-gray-900 mb-8"
             >
               Na verdade agora estou em um Macbook
             </button>
 
             {/* Shared image - close all tabs */}
-            <div className="space-y-2 text-left">
+            <div className="space-y-2 text-left mt-8">
               <h3 className="text-lg sm:text-xl font-bold text-gray-900">Feche todas as guias do Facebook antes de clicar no botão verde de conectar:</h3>
               <p className="text-base sm:text-lg text-gray-600">Na parte superior do navegador, verifique se já não tem uma guia de conexão aberta:</p>
               <div className="bg-gray-100 rounded-lg overflow-hidden">
@@ -1111,7 +1299,7 @@ export default function ConnectionWizardPage() {
               onClick={() => goToStep('step_connection_start')}
               className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors shadow-lg px-6 text-lg sm:text-xl"
             >
-              fiz isso, continuar
+              Fiz isso, continuar
             </button>
             <button onClick={() => goToStep('step_inside_system')} className="text-gray-500 hover:text-gray-800 underline text-base sm:text-lg">Voltar</button>
           </div>
@@ -1605,8 +1793,7 @@ export default function ConnectionWizardPage() {
               <div className="flex items-center justify-center gap-2 mb-3">
                 <AppleIcon />
                 <div>
-                  <p className="text-base sm:text-lg text-gray-500 font-bold tracking-wider uppercase">Não Recebi (iPhone)</p>
-                  <h3 className="text-lg font-bold text-gray-900">Modo iPhone</h3>
+                  <h3 className="text-lg font-bold text-gray-900">No iPhone</h3>
                 </div>
               </div>
 
@@ -1696,7 +1883,7 @@ export default function ConnectionWizardPage() {
           {
             images: ['/and-3.png', '/and-a.png'],
             descriptions: [
-              '🔑 Conta > Depois vá em Plataforma Comercial',
+              'Clique em 🔑 Conta',
               'Clique em Plataforma Comercial'
             ],
             subtitle: 'Etapa 2 de 4'
@@ -1726,8 +1913,7 @@ export default function ConnectionWizardPage() {
               <div className="flex items-center justify-center gap-2 mb-3">
                 <AndroidIcon />
                 <div>
-                  <p className="text-base sm:text-lg text-gray-500 font-bold tracking-wider uppercase">Não Recebi (Android)</p>
-                  <h3 className="text-lg font-bold text-gray-900">Modo Android</h3>
+                  <h3 className="text-lg font-bold text-gray-900">No Android</h3>
                 </div>
               </div>
 
@@ -1949,7 +2135,7 @@ export default function ConnectionWizardPage() {
                   </p>
                 </div>
                 <p className="text-gray-700 text-center text-lg sm:text-xl">
-                  Nesse momento basta apenas clicar em <strong>concluir</strong> e na tela do SecretáriaPlus, apenas aguarde.
+                  Nesse momento basta clicar em <strong>concluir</strong>, e na tela do SecretáriaPlus apenas aguarde.
                 </p>
               </div>
 
@@ -1983,12 +2169,16 @@ export default function ConnectionWizardPage() {
                 </div>
               </div>
               <div className="grid gap-2 mt-5">
-                <button onClick={() => window.location.reload()} className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors shadow-lg text-lg sm:text-xl">Concluir</button>
+                <button onClick={() => goToStep('step_celebration')} className="w-full py-3 bg-gray-900 text-white font-bold rounded-xl hover:bg-gray-800 transition-colors shadow-lg text-lg sm:text-xl">Feito 🎉</button>
                 <button onClick={() => goToStep('step_model_2_fuso')} className="w-full py-3 text-gray-500 hover:text-gray-800 font-medium transition-colors">Voltar etapa anterior</button>
               </div>
             </div>
           </div>
         );
+      }
+
+      case 'step_celebration': {
+        return <CelebrationScreen />;
       }
 
       default:
