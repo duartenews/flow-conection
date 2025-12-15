@@ -1161,8 +1161,7 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
               onTouchEnd={handleDragEnd}
             >
               <div>
-                <p className="text-base sm:text-lg font-semibold text-gray-900">Chat de Suporte</p>
-                <p className="text-sm text-gray-500">Converse com nosso assistente</p>
+                <p className="text-base sm:text-lg font-semibold text-gray-900">Suporte de Conexão</p>
               </div>
               
               <div className="flex items-center gap-3">
