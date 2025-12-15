@@ -175,11 +175,40 @@ function MarkdownContent({ content }: { content: string }) {
               {children}
             </h4>
           ),
-          p: ({ children }) => (
-            <p className="text-sm sm:text-lg text-gray-800 mb-3 last:mb-0 leading-relaxed">
-              {children}
-            </p>
-          ),
+          p: ({ children }) => {
+            // Detectar se o parágrafo contém apenas um link
+            const isStandaloneLink = React.Children.count(children) === 1 && 
+              React.isValidElement(children) && 
+              children.type === 'a';
+            
+            if (isStandaloneLink) {
+              const linkChild = children as React.ReactElement<{ href?: string; children: React.ReactNode }>;
+              const href = linkChild.props.href;
+              const linkText = typeof linkChild.props.children === 'string' 
+                ? linkChild.props.children 
+                : href;
+              
+              return (
+                <a
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 my-3 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors shadow-md hover:shadow-lg text-sm sm:text-base"
+                >
+                  <span>{linkText}</span>
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                  </svg>
+                </a>
+              );
+            }
+            
+            return (
+              <p className="text-sm sm:text-lg text-gray-800 mb-3 last:mb-0 leading-relaxed">
+                {children}
+              </p>
+            );
+          },
           ul: ({ children }) => (
             <ul className="my-3 space-y-2 pl-1">
               {children}
@@ -223,7 +252,7 @@ function MarkdownContent({ content }: { content: string }) {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800 underline underline-offset-2 transition-colors"
+              className="text-blue-600 hover:text-blue-800 underline underline-offset-2 transition-colors font-medium"
             >
               {children}
             </a>
