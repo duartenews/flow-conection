@@ -1642,9 +1642,9 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
                       }
                     }}
                     placeholder="Digite sua mensagem..."
-                    className="flex-1 w-full resize-none rounded-2xl border border-gray-200 px-4 py-2 text-sm sm:text-lg text-gray-900 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none"
+                    className="flex-1 w-full resize-none rounded-2xl border border-gray-200 px-4 py-2 text-base text-gray-900 placeholder:text-gray-400 focus:border-blue-500 focus:outline-none"
                     rows={1}
-                    style={{ minWidth: '0', overflowY: 'auto', minHeight: '40px' }}
+                    style={{ minWidth: '0', overflowY: 'auto', minHeight: '40px', fontSize: '16px' }}
                   />
 
                   <div className="flex items-center gap-2 shrink-0">
