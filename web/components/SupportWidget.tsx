@@ -14,7 +14,31 @@ const ACCEPTED_FILE_TYPES = [
   'audio/wav',
   'audio/webm',
   'audio/mp4',
+  'audio/aac',
+  'audio/x-m4a',
+  'audio/m4a',
 ];
+
+// Detect best supported audio mimeType for MediaRecorder (Safari iOS uses mp4, Chrome/Firefox use webm)
+const getSupportedAudioMimeType = (): { mimeType: string; extension: string } => {
+  const types = [
+    { mimeType: 'audio/webm;codecs=opus', extension: 'webm' },
+    { mimeType: 'audio/webm', extension: 'webm' },
+    { mimeType: 'audio/mp4', extension: 'm4a' },
+    { mimeType: 'audio/aac', extension: 'aac' },
+    { mimeType: 'audio/wav', extension: 'wav' },
+    { mimeType: 'audio/mpeg', extension: 'mp3' },
+  ];
+
+  for (const t of types) {
+    if (typeof MediaRecorder !== 'undefined' && MediaRecorder.isTypeSupported(t.mimeType)) {
+      return t;
+    }
+  }
+
+  // Fallback: let browser decide (no mimeType specified)
+  return { mimeType: '', extension: 'webm' };
+};
 
 const MAX_FILES = 5;
 
@@ -250,10 +274,11 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
   const [photoPreview, setPhotoPreview] = useState<{ file: File; url: string } | null>(null);
   const [isCameraOpen, setIsCameraOpen] = useState(false);
   const [cameraStream, setCameraStream] = useState<MediaStream | null>(null);
-  const [dragStartY, setDragStartY] = useState<number | null>(null);
-  const [dragCurrentY, setDragCurrentY] = useState<number | null>(null);
   const [showVolumeSlider, setShowVolumeSlider] = useState(false);
   const [showBotTyping, setShowBotTyping] = useState(false);
+  const [showScrollToLatest, setShowScrollToLatest] = useState(false);
+  const [pendingAssistantMessageId, setPendingAssistantMessageId] = useState<string | null>(null);
+  const [isUserNearBottom, setIsUserNearBottom] = useState(true);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const cameraInputRef = useRef<HTMLInputElement | null>(null);
@@ -263,6 +288,8 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
   const chunksRef = useRef<Blob[]>([]);
   const recordingTimerRef = useRef<NodeJS.Timeout | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const messagesContainerRef = useRef<HTMLDivElement | null>(null);
+  const messageElementsRef = useRef<Record<string, HTMLDivElement | null>>({});
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
@@ -295,9 +322,36 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
 
   // === FUNÇÕES AUXILIARES ===
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+  const scrollToBottom = useCallback((behavior: ScrollBehavior = 'smooth') => {
+    messagesEndRef.current?.scrollIntoView({ behavior });
+  }, []);
+
+  const scrollToMessage = useCallback((messageId: string) => {
+    const target = messageElementsRef.current[messageId];
+    if (target) {
+      requestAnimationFrame(() => {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    } else {
+      scrollToBottom();
+    }
+  }, [scrollToBottom]);
+
+  const isNearBottom = useCallback((element: HTMLDivElement | null, threshold = 96) => {
+    if (!element) return true;
+    const distance = element.scrollHeight - element.scrollTop - element.clientHeight;
+    return distance <= threshold;
+  }, []);
+
+  const handleScrollIndicatorClick = useCallback(() => {
+    if (pendingAssistantMessageId) {
+      scrollToMessage(pendingAssistantMessageId);
+    } else {
+      scrollToBottom();
+    }
+    setPendingAssistantMessageId(null);
+    setShowScrollToLatest(false);
+  }, [pendingAssistantMessageId, scrollToBottom, scrollToMessage]);
 
   const captureStageContext = () => {
     if (!currentStep) {
@@ -756,8 +810,40 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
   }, [files, audioPreview]);
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
+    const container = messagesContainerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      const nearBottom = isNearBottom(container);
+      setIsUserNearBottom(nearBottom);
+      if (nearBottom) {
+        setShowScrollToLatest(false);
+        setPendingAssistantMessageId(null);
+      }
+    };
+
+    handleScroll();
+    container.addEventListener('scroll', handleScroll);
+    return () => {
+      container.removeEventListener('scroll', handleScroll);
+    };
+  }, [isOpen, isNearBottom]);
+
+  useEffect(() => {
+    const lastMessage = messages[messages.length - 1];
+    if (!lastMessage) return;
+
+    if (lastMessage.role === 'assistant') {
+      setPendingAssistantMessageId(lastMessage.id);
+      if (isUserNearBottom) {
+        scrollToMessage(lastMessage.id);
+      } else {
+        setShowScrollToLatest(true);
+      }
+    } else if (isUserNearBottom) {
+      scrollToBottom();
+    }
+  }, [messages, isUserNearBottom, scrollToBottom, scrollToMessage]);
 
   useEffect(() => {
     resizeTextarea();
@@ -783,8 +869,6 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
     setStatus('idle');
     setError(null);
     stopRecording();
-    setDragStartY(null);
-    setDragCurrentY(null);
     closeCamera();
     if (photoPreview) {
       URL.revokeObjectURL(photoPreview.url);
@@ -975,30 +1059,6 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
     openCamera();
   };
 
-  // === DRAG HANDLERS ===
-
-  const handleDragStart = (e: React.TouchEvent | React.MouseEvent) => {
-    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
-    setDragStartY(clientY);
-  };
-
-  const handleDragMove = (e: React.TouchEvent | React.MouseEvent) => {
-    if (dragStartY === null) return;
-    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
-    const diff = clientY - dragStartY;
-    if (diff > 0) {
-      setDragCurrentY(diff);
-    }
-  };
-
-  const handleDragEnd = () => {
-    if (dragCurrentY !== null && dragCurrentY > 100) {
-      closeModal();
-    }
-    setDragStartY(null);
-    setDragCurrentY(null);
-  };
-
   // === FILE HANDLERS ===
 
   const handleFiles = useCallback(
@@ -1064,7 +1124,18 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
     try {
       clearAudioPreview();
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      const recorder = new MediaRecorder(stream);
+      
+      // Detect supported audio format (Safari iOS uses mp4, Chrome/Firefox use webm)
+      const { mimeType, extension } = getSupportedAudioMimeType();
+      
+      const recorderOptions: MediaRecorderOptions = {};
+      if (mimeType) {
+        recorderOptions.mimeType = mimeType;
+      }
+      
+      const recorder = new MediaRecorder(stream, recorderOptions);
+      const actualMimeType = recorder.mimeType || mimeType || 'audio/webm';
+      
       mediaRecorderRef.current = recorder;
       chunksRef.current = [];
       recorder.ondataavailable = event => {
@@ -1073,8 +1144,8 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
         }
       };
       recorder.onstop = () => {
-        const blob = new Blob(chunksRef.current, { type: 'audio/webm' });
-        const file = new File([blob], `suporte-audio-${Date.now()}.webm`, { type: 'audio/webm' });
+        const blob = new Blob(chunksRef.current, { type: actualMimeType });
+        const file = new File([blob], `suporte-audio-${Date.now()}.${extension}`, { type: actualMimeType });
         const url = URL.createObjectURL(blob);
         setAudioPreview({ file, url });
         chunksRef.current = [];
@@ -1123,42 +1194,16 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
 
       {isOpen && (
         <div 
-          className="fixed inset-0 z-50 bg-black/20"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) {
-              closeModal();
-            }
-          }}
+          className="fixed inset-0 z-50 bg-black/30"
         >
           <div 
-            className="fixed top-[5%] bottom-0 left-0 right-0 flex w-full flex-col rounded-t-2xl bg-white shadow-2xl animate-slide-up"
+            className="fixed inset-0 flex w-full flex-col bg-white shadow-2xl animate-slide-up"
             onDrop={handleDrop}
             onDragOver={handleDragOver}
-            style={{
-              transform: dragCurrentY ? `translateY(${dragCurrentY}px)` : 'none',
-              transition: dragCurrentY === null ? 'transform 0.3s ease-out' : 'none'
-            }}
           >
-            {/* Drag Handle */}
-            <div 
-              className="flex justify-center py-2 cursor-grab active:cursor-grabbing"
-              onTouchStart={handleDragStart}
-              onTouchMove={handleDragMove}
-              onTouchEnd={handleDragEnd}
-              onMouseDown={handleDragStart}
-              onMouseMove={handleDragMove}
-              onMouseUp={handleDragEnd}
-              onMouseLeave={handleDragEnd}
-            >
-              <div className="w-12 h-1 bg-gray-300 rounded-full"></div>
-            </div>
-            
             {/* Header */}
             <div 
-              className="flex items-center justify-between border-b border-gray-200 px-6 py-3"
-              onTouchStart={handleDragStart}
-              onTouchMove={handleDragMove}
-              onTouchEnd={handleDragEnd}
+              className="flex items-center justify-between border-b border-gray-200 px-6 py-4"
             >
               <div>
                 <p className="text-base sm:text-lg font-semibold text-gray-900">Suporte de Conexão</p>
@@ -1167,7 +1212,8 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
               <div className="flex items-center gap-3">
                 <button
                   type="button"
-                  className="text-sm sm:text-lg font-semibold text-gray-500 hover:text-gray-900"
+                  aria-label="Fechar suporte"
+                  className="flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-full border border-gray-200 bg-gray-100 text-lg sm:text-2xl font-bold text-gray-600 hover:bg-gray-200 hover:text-gray-900 transition-colors"
                   onClick={closeModal}
                 >
                   ✕
@@ -1176,7 +1222,7 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto px-6 py-4 space-y-4">
+            <div ref={messagesContainerRef} className="relative flex-1 overflow-y-auto px-6 py-4 space-y-4">
               {messages.length === 0 && (
                 <div className="flex h-full items-center justify-center text-center">
                   <div>
@@ -1191,6 +1237,13 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
               {messages.map((msg) => (
                 <div
                   key={msg.id}
+                  ref={el => {
+                    if (el) {
+                      messageElementsRef.current[msg.id] = el;
+                    } else {
+                      delete messageElementsRef.current[msg.id];
+                    }
+                  }}
                   className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
                   <div
@@ -1236,6 +1289,28 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
               )}
               
               <div ref={messagesEndRef} />
+
+              {showScrollToLatest && (
+                <button
+                  type="button"
+                  onClick={handleScrollIndicatorClick}
+                  className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full bg-blue-600 px-4 py-2 text-sm sm:text-lg font-semibold text-white shadow-xl shadow-blue-600/40 transition hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-300"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M12 5v14" />
+                    <path d="m19 12-7 7-7-7" />
+                  </svg>
+                  <span>Nova resposta</span>
+                </button>
+              )}
             </div>
 
             {/* Camera Interface */}
