@@ -1402,21 +1402,21 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
                 <button
                   type="button"
                   onClick={handleScrollIndicatorClick}
-                  className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full bg-blue-600 px-4 py-2 text-sm sm:text-lg font-semibold text-white shadow-xl shadow-blue-600/40 transition hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-300"
+                  aria-label="Ir para nova resposta"
+                  className="absolute bottom-4 right-4 flex h-12 w-12 items-center justify-center rounded-full bg-white border border-gray-200 shadow-lg shadow-gray-400/30 transition hover:shadow-xl hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-300"
                 >
                   <svg
-                    className="w-5 h-5"
+                    className="w-6 h-6 text-gray-700"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    strokeWidth="2"
+                    strokeWidth="2.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   >
                     <path d="M12 5v14" />
                     <path d="m19 12-7 7-7-7" />
                   </svg>
-                  <span>Nova resposta</span>
                 </button>
               )}
             </div>
