@@ -1123,7 +1123,7 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
 
       {isOpen && (
         <div 
-          className="fixed inset-0 z-50 flex items-end justify-center bg-black/20"
+          className="fixed inset-0 z-50 bg-black/20"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
               closeModal();
@@ -1131,7 +1131,7 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
           }}
         >
           <div 
-            className="flex h-[90vh] max-h-[90dvh] w-full flex-col rounded-t-2xl bg-white shadow-2xl animate-slide-up"
+            className="fixed top-[5%] bottom-0 left-0 right-0 flex w-full flex-col rounded-t-2xl bg-white shadow-2xl animate-slide-up"
             onDrop={handleDrop}
             onDragOver={handleDragOver}
             style={{
