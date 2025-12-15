@@ -1277,7 +1277,7 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
             {/* Photo Preview */}
             {photoPreview && (
               <div className="absolute inset-0 z-50 bg-black flex flex-col">
-                <div className="relative flex-1 flex items-center justify-center p-4">
+                <div className="relative flex-1 flex items-center justify-center p-4 overflow-hidden">
                   <img 
                     src={photoPreview.url} 
                     alt="Preview da foto" 
@@ -1285,16 +1285,16 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
                   />
                 </div>
                 
-                <div className="p-6 bg-black/90 flex flex-col items-center space-y-4">
-                  <p className="text-white text-center text-lg font-medium">
+                <div className="p-4 sm:p-6 bg-black/90 flex flex-col items-center space-y-3 sm:space-y-4 flex-shrink-0">
+                  <p className="text-white text-center text-base sm:text-lg font-medium">
                     É possível ver com clareza o problema?
                   </p>
                   
-                  <div className="flex gap-4 w-full max-w-sm">
+                  <div className="flex gap-3 sm:gap-4 w-full max-w-sm">
                     <button
                       type="button"
                       onClick={retakePhoto}
-                      className="flex-1 px-6 py-3 bg-gray-600 text-white rounded-full font-semibold hover:bg-gray-700 transition-colors"
+                      className="flex-1 px-4 sm:px-6 py-2.5 sm:py-3 bg-gray-600 text-white rounded-full text-sm sm:text-base font-semibold hover:bg-gray-700 transition-colors"
                     >
                       Não, tirar outra
                     </button>
@@ -1302,7 +1302,7 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
                     <button
                       type="button"
                       onClick={confirmPhoto}
-                      className="flex-1 px-6 py-3 bg-green-600 text-white rounded-full font-semibold hover:bg-green-700 transition-colors"
+                      className="flex-1 px-4 sm:px-6 py-2.5 sm:py-3 bg-green-600 text-white rounded-full text-sm sm:text-base font-semibold hover:bg-green-700 transition-colors"
                     >
                       Sim, enviar
                     </button>
