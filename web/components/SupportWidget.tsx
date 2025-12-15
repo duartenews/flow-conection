@@ -1397,29 +1397,30 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
               )}
               
               <div ref={messagesEndRef} />
-
-              {showScrollToLatest && (
-                <button
-                  type="button"
-                  onClick={handleScrollIndicatorClick}
-                  aria-label="Ir para nova resposta"
-                  className="absolute bottom-4 right-4 flex h-12 w-12 items-center justify-center rounded-full bg-white border border-gray-200 shadow-lg shadow-gray-400/30 transition hover:shadow-xl hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-300"
-                >
-                  <svg
-                    className="w-6 h-6 text-gray-700"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M12 5v14" />
-                    <path d="m19 12-7 7-7-7" />
-                  </svg>
-                </button>
-              )}
             </div>
+
+            {/* Botão de scroll - fora do container de scroll para ficar fixo */}
+            {showScrollToLatest && (
+              <button
+                type="button"
+                onClick={handleScrollIndicatorClick}
+                aria-label="Ir para nova resposta"
+                className="absolute bottom-24 right-6 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white border border-gray-200 shadow-lg shadow-gray-400/30 transition hover:shadow-xl hover:bg-gray-50 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-blue-300"
+              >
+                <svg
+                  className="w-6 h-6 text-gray-700"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M12 5v14" />
+                  <path d="m19 12-7 7-7-7" />
+                </svg>
+              </button>
+            )}
 
             {/* Camera Interface */}
             {isCameraOpen && (
