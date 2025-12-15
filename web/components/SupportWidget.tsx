@@ -113,6 +113,56 @@ type ChatMessage = {
   audioUrl?: string;
 };
 
+// Chave para localStorage
+const STORAGE_KEY = 'support_chat_messages';
+
+// Tipo para serialização (timestamp como string)
+type StoredMessage = Omit<ChatMessage, 'timestamp'> & { timestamp: string };
+
+// Funções de persistência
+const saveMessagesToStorage = (messages: ChatMessage[]) => {
+  try {
+    // Filtra mensagens sem audioUrl/imageUrls (blobs não podem ser serializados)
+    const messagesToSave: StoredMessage[] = messages.map(msg => ({
+      ...msg,
+      timestamp: msg.timestamp.toISOString(),
+      // Remove URLs de blob que não funcionam após reload
+      imageUrls: msg.imageUrls?.filter(url => !url.startsWith('blob:')) || undefined,
+      audioUrl: msg.audioUrl?.startsWith('blob:') ? undefined : msg.audioUrl,
+    }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(messagesToSave));
+  } catch (err) {
+    console.error('Erro ao salvar mensagens:', err);
+  }
+};
+
+const loadMessagesFromStorage = (): ChatMessage[] | null => {
+  try {
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (!stored) return null;
+    
+    const parsed: StoredMessage[] = JSON.parse(stored);
+    if (!Array.isArray(parsed) || parsed.length === 0) return null;
+    
+    // Converte timestamp de volta para Date
+    return parsed.map(msg => ({
+      ...msg,
+      timestamp: new Date(msg.timestamp),
+    }));
+  } catch (err) {
+    console.error('Erro ao carregar mensagens:', err);
+    return null;
+  }
+};
+
+const clearStoredMessages = () => {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch (err) {
+    console.error('Erro ao limpar mensagens:', err);
+  }
+};
+
 type UploadStatus = 'idle' | 'sending' | 'success' | 'error';
 
 interface SupportWidgetProps {
@@ -304,7 +354,16 @@ const createWelcomeMessage = (): ChatMessage => ({
 export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState<ChatMessage[]>([createWelcomeMessage()]);
+  const [messages, setMessages] = useState<ChatMessage[]>(() => {
+    // Inicializa com mensagens do localStorage ou mensagem de boas-vindas
+    if (typeof window !== 'undefined') {
+      const stored = loadMessagesFromStorage();
+      if (stored && stored.length > 0) {
+        return stored;
+      }
+    }
+    return [createWelcomeMessage()];
+  });
   const [files, setFiles] = useState<File[]>([]);
   const [filePreviews, setFilePreviews] = useState<{ id: string; url: string | null }[]>([]);
   const [audioPreview, setAudioPreview] = useState<{ file: File; url: string } | null>(null);
@@ -822,6 +881,13 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
 
   // === EFFECTS ===
 
+  // Salva mensagens no localStorage sempre que mudarem
+  useEffect(() => {
+    if (messages.length > 0) {
+      saveMessagesToStorage(messages);
+    }
+  }, [messages]);
+
   useEffect(() => {
     if (audioPreview) {
       setAudioDuration(0);
@@ -920,6 +986,7 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
   };
 
   const resetChat = async () => {
+    clearStoredMessages(); // Limpa localStorage
     setMessages([createWelcomeMessage()]);
     captureStageContext();
     resetTypingSession();
