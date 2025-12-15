@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useEffect, ReactNode, useCallback } from 'react';
+import React, { useState, useEffect, ReactNode } from 'react';
 import confetti from 'canvas-confetti';
+import { SupportWidget } from '../components/SupportWidget';
 
 // --- Types ---
 
@@ -52,6 +53,13 @@ type DeviceState = {
   mobileType?: 'iphone' | 'android';
   tablet: boolean;
 };
+
+declare global {
+  interface Window {
+    goToStep?: (step: StepId) => void;
+    listSteps?: () => void;
+  }
+}
 
 // --- Components ---
 
@@ -260,45 +268,6 @@ const guidedSteps: StepId[] = [
   'step_model_2_conclusao',
 ];
 
-type StageMeta = {
-  id: string;
-  title: string;
-  description: string;
-  icon: string;
-  steps: StepId[];
-};
-
-const WIZARD_STAGES: StageMeta[] = [
-  {
-    id: 'stage-whatsapp',
-    title: 'Tipo de WhatsApp',
-    description: 'Validamos se o seu número está no aplicativo correto antes da conexão.',
-    icon: '💬',
-    steps: stageOneSteps,
-  },
-  {
-    id: 'stage-devices',
-    title: 'Ambiente e dispositivos',
-    description: 'Garantimos que você tem computador, celular e sistemas prontos para conectar.',
-    icon: '🖥️',
-    steps: stageTwoSteps,
-  },
-  {
-    id: 'stage-traffic',
-    title: 'Tráfego e Meta',
-    description: 'Checamos regras de anúncios e acessos ao Facebook/Meta Ads.',
-    icon: '📣',
-    steps: stageThreeSteps,
-  },
-  {
-    id: 'stage-connect',
-    title: 'Conexão guiada',
-    description: 'Mostramos telas reais e cada clique para finalizar o processo.',
-    icon: '🟢',
-    steps: guidedSteps,
-  },
-];
-
 const STEP_LAYOUT: Partial<Record<StepId, StageLayoutOptions>> = {};
 
 const assignLayout = (steps: StepId[], layout: StageLayoutOptions) => {
@@ -359,9 +328,10 @@ export default function ConnectionWizardPage() {
   });
   const [showMobileWarning, setShowMobileWarning] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [receivedMessage, setReceivedMessage] = useState<boolean | null>(null);
   const [cameFromModel1, setCameFromModel1] = useState(false);
   const [stepHistory, setStepHistory] = useState<StepId[]>(['stage_1_whatsapp_type']);
+  const [choiceState, setChoiceState] = useState<Record<string, string>>({});
+  const [journeyContext, setJourneyContext] = useState<string>('');
 
   // Calculate progress: starts at 0% on first step, then each step adds 40% of remaining space
   const calculateProgress = () => {
@@ -383,6 +353,7 @@ export default function ConnectionWizardPage() {
   const saveChoice = (key: string, value: string) => {
     if (typeof window !== 'undefined') {
       localStorage.setItem(`wizard_${key}`, value);
+      setChoiceState(prev => ({ ...prev, [key]: value }));
     }
   };
 
@@ -417,16 +388,114 @@ export default function ConnectionWizardPage() {
     }
   }, [currentStep]);
 
+  // Carregar escolhas gravadas em localStorage
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const keys = ['runs_ads', 'ad_platform', 'meta_access', 'lost_access_strategy'];
+    const loaded: Record<string, string> = {};
+    keys.forEach(k => {
+      const stored = localStorage.getItem(`wizard_${k}`);
+      if (stored) loaded[k] = stored;
+    });
+    setChoiceState(loaded);
+  }, []);
+
+  // Gerar resumo de jornada para o suporte
+  useEffect(() => {
+    const lines: string[] = [];
+
+    const deviceParts: string[] = [];
+    if (devices.computer) {
+      const label = devices.computerType === 'mac' ? 'Computador Mac' : devices.computerType === 'windows' ? 'Computador Windows' : 'Computador';
+      deviceParts.push(label);
+    }
+    if (devices.mobile) {
+      const label = devices.mobileType === 'iphone' ? 'iPhone' : devices.mobileType === 'android' ? 'Android' : 'Celular';
+      deviceParts.push(label);
+    }
+    if (devices.tablet) {
+      deviceParts.push('Tablet/iPad');
+    }
+    lines.push(`Dispositivos marcados: ${deviceParts.length ? deviceParts.join(', ') : 'nenhum marcado'}`);
+
+    if (choiceState.runs_ads) {
+      const map: Record<string, string> = {
+        false_other_number: 'Roda anúncios, mas não para este número',
+        true: 'Roda anúncios para este número',
+        used_to_run: 'Já rodou anúncios para este número, mas não atualmente',
+        false: 'Não roda tráfego pago',
+      };
+      lines.push(`Tráfego pago: ${map[choiceState.runs_ads] || choiceState.runs_ads}`);
+    }
+
+    if (choiceState.ad_platform) {
+      const map: Record<string, string> = {
+        instagram_boost: 'Impulsionar/turbinar do Instagram',
+        meta_business: 'Gerenciador de Anúncios (Meta)',
+      };
+      lines.push(`Plataforma de anúncios: ${map[choiceState.ad_platform] || choiceState.ad_platform}`);
+    }
+
+    if (choiceState.meta_access) {
+      const map: Record<string, string> = {
+        has_access: 'Tem acesso à conta Meta dos anúncios',
+        uncertain: 'Não tem certeza se é a conta certa',
+      };
+      lines.push(`Acesso à conta Meta: ${map[choiceState.meta_access] || choiceState.meta_access}`);
+    }
+
+    if (choiceState.lost_access_strategy) {
+      const map: Record<string, string> = {
+        try_anyway: 'Vai tentar conectar com outra conta (perdeu acesso)',
+      };
+      lines.push(`Estratégia para acesso perdido: ${map[choiceState.lost_access_strategy] || choiceState.lost_access_strategy}`);
+    }
+
+    const stepNames: Record<StepId, string> = {
+      stage_1_whatsapp_type: 'Tipo de WhatsApp',
+      stage_1_migrate_warning: 'Aviso de migração para Business',
+      stage_2_devices: 'Dispositivos em mãos',
+      stage_2_no_computer: 'Sem computador',
+      stage_2_no_computer_support: 'Suporte sem computador',
+      stage_2_computer_no_mobile: 'Computador sem celular',
+      stage_2_tablet_check: 'WhatsApp no tablet',
+      stage_2_os_selection: 'Seleção de sistemas',
+      stage_3_traffic_check: 'Tráfego pago',
+      stage_3_traffic_source: 'Fonte de anúncios',
+      stage_3_any_facebook: 'Qualquer Facebook serve',
+      stage_3_meta_access_check: 'Checagem de acesso Meta',
+      stage_3_meta_access_uncertain: 'Incerteza de acesso Meta',
+      stage_3_meta_lost_access: 'Acesso perdido',
+      stage_3_meta_lost_access_options: 'Opções para acesso perdido',
+      stage_3_meta_lost_access_path_2: 'Caminho de migração',
+      step_inside_system: 'Dentro do sistema',
+      step_check_tabs_mac: 'Checar abas (Mac)',
+      step_check_tabs_windows: 'Checar abas (Windows)',
+      step_connection_start: 'Início da conexão',
+      step_model_1: 'Modelo 1',
+      step_model_2: 'Modelo 2',
+      step_model_2_sim: 'Modelo 2 - Confirmar',
+      step_model_2_nao_iphone: 'Modelo 2 - iPhone',
+      step_model_2_nao_android: 'Modelo 2 - Android',
+      step_model_2_novo_numero: 'Modelo 2 - Novo número',
+      step_model_2_fuso: 'Modelo 2 - Fuso horário',
+      step_model_2_conclusao: 'Modelo 2 - Conclusão',
+      step_celebration: 'Celebração',
+    };
+    const path = stepHistory.map(step => stepNames[step] || step);
+    lines.push(`Etapas percorridas: ${path.join(' -> ')}`);
+
+    setJourneyContext(lines.join('\n'));
+  }, [devices, choiceState, stepHistory]);
+
   // Expose debug functions to console
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      // @ts-ignore
       window.goToStep = (step: StepId) => {
         console.log(`🚀 Pulando para: ${step}`);
         goToStep(step);
       };
       
-      // @ts-ignore
       window.listSteps = () => {
         const allSteps: StepId[] = [
           'stage_1_whatsapp_type',
@@ -1472,7 +1541,13 @@ export default function ConnectionWizardPage() {
       }
 
       case 'step_model_2': {
-        const model2Slides = [
+        const model2Slides: Array<{
+          image: string;
+          title: string;
+          subtitle: string;
+          description: ReactNode | null;
+          secondaryImage?: string;
+        }> = [
           {
             image: '/mod-2.0.png',
             title: 'Clique em Continuar',
@@ -1582,11 +1657,13 @@ export default function ConnectionWizardPage() {
           }
         ];
 
+        const activeSlide = model2Slides[currentSlide];
+
         return (
           <div className="w-full text-center animate-fadeIn max-w-2xl lg:max-w-5xl mx-auto">
             <div className="w-full py-3">
-              <p className="text-base sm:text-lg text-gray-500 font-bold tracking-wider uppercase mb-1">{model2Slides[currentSlide].subtitle}</p>
-              <h3 className="text-lg font-bold text-gray-900 mb-4">{model2Slides[currentSlide].title}</h3>
+              <p className="text-base sm:text-lg text-gray-500 font-bold tracking-wider uppercase mb-1">{activeSlide.subtitle}</p>
+              <h3 className="text-lg font-bold text-gray-900 mb-4">{activeSlide.title}</h3>
 
               {/* Image Container - 100% largura uma embaixo da outra */}
               {currentSlide !== 4 && (
@@ -1594,28 +1671,26 @@ export default function ConnectionWizardPage() {
                   <div className="rounded-lg overflow-hidden bg-gray-50 border border-gray-100 p-3">
                     <div className="w-[90%] mx-auto">
                       <img
-                        src={model2Slides[currentSlide].image}
-                        alt={model2Slides[currentSlide].title}
+                        src={activeSlide.image}
+                        alt={activeSlide.title}
                         className="w-full h-auto lg:max-h-96 object-contain"
                         onError={(e) => {
                           (e.target as HTMLImageElement).style.display = 'none';
-                          (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-4"><span class="text-gray-500 text-base sm:text-lg">📷 ' + model2Slides[currentSlide].image + '</span></div>';
+                          (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-4"><span class="text-gray-500 text-base sm:text-lg">📷 ' + activeSlide.image + '</span></div>';
                         }}
                       />
                     </div>
                   </div>
-                  {'secondaryImage' in model2Slides[currentSlide] && (
+                  {activeSlide.secondaryImage && (
                     <div className="rounded-lg overflow-hidden bg-gray-50 border border-gray-100 p-3">
                       <div className="w-[90%] mx-auto">
                         <img
-                          // @ts-ignore - checking generic object property
-                          src={model2Slides[currentSlide].secondaryImage}
-                          alt={model2Slides[currentSlide].title + ' part 2'}
+                          src={activeSlide.secondaryImage}
+                          alt={activeSlide.title + ' part 2'}
                           className="w-full h-auto lg:max-h-96 object-contain"
                           onError={(e) => {
                           (e.target as HTMLImageElement).style.display = 'none';
-                          // @ts-ignore
-                          (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-4"><span class="text-gray-500 text-base sm:text-lg">📷 ' + model2Slides[currentSlide].secondaryImage + '</span></div>';
+                          (e.target as HTMLImageElement).parentElement!.innerHTML = '<div class="flex items-center justify-center p-4"><span class="text-gray-500 text-base sm:text-lg">📷 ' + activeSlide.secondaryImage + '</span></div>';
                         }}
                         />
                       </div>
@@ -1624,7 +1699,7 @@ export default function ConnectionWizardPage() {
                 </div>
               )}
 
-              {model2Slides[currentSlide].description}
+              {activeSlide.description}
 
 
 
@@ -2191,9 +2266,6 @@ export default function ConnectionWizardPage() {
     return <StageSurface {...layout}>{renderStepBody()}</StageSurface>;
   };
 
-  const stageIndex = WIZARD_STAGES.findIndex(stage => stage.steps.includes(currentStep));
-  const safeStageIndex = stageIndex < 0 ? 0 : stageIndex;
-  const activeStage = WIZARD_STAGES[safeStageIndex];
 
   // --- Main Render ---
 
@@ -2210,6 +2282,8 @@ export default function ConnectionWizardPage() {
       <main className="mx-auto max-w-4xl px-6 pt-20 pb-32">
         {renderStepContent()}
       </main>
+
+      <SupportWidget currentStep={currentStep} journeyContext={journeyContext} />
     </div>
   );
 }
