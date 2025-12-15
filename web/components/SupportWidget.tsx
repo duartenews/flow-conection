@@ -1131,7 +1131,7 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
           }}
         >
           <div 
-            className="flex h-[97vh] w-full flex-col rounded-t-2xl bg-white shadow-2xl animate-slide-up"
+            className="flex h-[90vh] max-h-[90dvh] w-full flex-col rounded-t-2xl bg-white shadow-2xl animate-slide-up"
             onDrop={handleDrop}
             onDragOver={handleDragOver}
             style={{
