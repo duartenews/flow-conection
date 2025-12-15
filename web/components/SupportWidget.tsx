@@ -21,13 +21,23 @@ const ACCEPTED_FILE_TYPES = [
 
 // Detect best supported audio mimeType for MediaRecorder (Safari iOS uses mp4, Chrome/Firefox use webm)
 const getSupportedAudioMimeType = (): { mimeType: string; extension: string } => {
-  const types = [
+  // Check if running on Safari/iOS first - they need mp4 format
+  const isSafari = typeof navigator !== 'undefined' && 
+    /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+  
+  // Safari-first order if detected, otherwise webm-first
+  const types = isSafari ? [
+    { mimeType: 'audio/mp4', extension: 'm4a' },
+    { mimeType: 'audio/aac', extension: 'aac' },
+    { mimeType: 'audio/wav', extension: 'wav' },
+    { mimeType: 'audio/webm;codecs=opus', extension: 'webm' },
+    { mimeType: 'audio/webm', extension: 'webm' },
+  ] : [
     { mimeType: 'audio/webm;codecs=opus', extension: 'webm' },
     { mimeType: 'audio/webm', extension: 'webm' },
     { mimeType: 'audio/mp4', extension: 'm4a' },
     { mimeType: 'audio/aac', extension: 'aac' },
     { mimeType: 'audio/wav', extension: 'wav' },
-    { mimeType: 'audio/mpeg', extension: 'mp3' },
   ];
 
   for (const t of types) {
@@ -37,7 +47,7 @@ const getSupportedAudioMimeType = (): { mimeType: string; extension: string } =>
   }
 
   // Fallback: let browser decide (no mimeType specified)
-  return { mimeType: '', extension: 'webm' };
+  return { mimeType: '', extension: 'm4a' };
 };
 
 const MAX_FILES = 5;
@@ -115,6 +125,8 @@ function AudioPlayer({ audioUrl, isUserMessage }: { audioUrl: string; isUserMess
     <div className="flex items-center gap-3">
       <audio
         controls
+        playsInline
+        preload="metadata"
         src={audioUrl}
         className="flex-1 h-10 max-w-[220px]"
         style={{
@@ -1430,6 +1442,12 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
                     ref={audioRef}
                     src={audioPreview.url}
                     className="hidden"
+                    playsInline
+                    preload="metadata"
+                    onError={(e) => {
+                      console.error('Erro ao carregar áudio:', e);
+                      setError('Formato de áudio não suportado. Tente gravar novamente.');
+                    }}
                     onEnded={() => {
                       setIsAudioPlaying(false);
                       if (audioRef.current) {
@@ -1479,7 +1497,10 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
                         if (isAudioPlaying) {
                           audio.pause();
                         } else {
-                          audio.play();
+                          audio.play().catch((err) => {
+                            console.error('Erro ao reproduzir áudio:', err);
+                            setError('Não foi possível reproduzir o áudio. Tente gravar novamente.');
+                          });
                         }
                       }}
                       className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors"
