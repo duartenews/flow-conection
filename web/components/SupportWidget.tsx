@@ -444,14 +444,11 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
   }, []);
 
   const handleScrollIndicatorClick = useCallback(() => {
-    if (pendingAssistantMessageId) {
-      scrollToMessage(pendingAssistantMessageId);
-    } else {
-      scrollToBottom();
-    }
+    // Scroll direto para o final
+    scrollToBottom();
     setPendingAssistantMessageId(null);
     setShowScrollToLatest(false);
-  }, [pendingAssistantMessageId, scrollToBottom, scrollToMessage]);
+  }, [scrollToBottom]);
 
   const captureStageContext = () => {
     if (!currentStep) {
@@ -943,14 +940,19 @@ export function SupportWidget({ currentStep, journeyContext }: SupportWidgetProp
     if (lastMessage.role === 'assistant') {
       setPendingAssistantMessageId(lastMessage.id);
       if (isUserNearBottom) {
-        scrollToMessage(lastMessage.id);
+        // Auto-scroll para o final quando usuário está perto do final
+        scrollToBottom();
+        setShowScrollToLatest(false);
       } else {
+        // Mostra o botão se usuário está lendo histórico
         setShowScrollToLatest(true);
       }
-    } else if (isUserNearBottom) {
+    } else {
+      // Mensagem do usuário: sempre scroll para o final
       scrollToBottom();
+      setShowScrollToLatest(false);
     }
-  }, [messages, isUserNearBottom, scrollToBottom, scrollToMessage]);
+  }, [messages, isUserNearBottom, scrollToBottom]);
 
   useEffect(() => {
     resizeTextarea();
